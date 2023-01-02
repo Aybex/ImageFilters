@@ -21,7 +21,7 @@
 
 using System.ComponentModel;
 
-namespace ImageFilters.UI.UserControls; 
+namespace ImageFilters.GUI.UserControls; 
 
 /// <summary>
 /// This is just a control with an image and a details pane below it.

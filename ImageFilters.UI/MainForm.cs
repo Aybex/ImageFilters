@@ -27,11 +27,9 @@ using ImageFilters.Library.Imager;
 using ImageFilters.Library.Imager.Interface;
 using ImageFilters.Library.Scripting;
 using ImageFilters.Library.Scripting.ScriptActions;
-using ImageFilters.UI.Classes;
-using Config = ImageFilters.UI.Classes.Config;
 using word = System.UInt16;
 
-namespace ImageFilters.UI;
+namespace ImageFilters.GUI;
 
 /// <summary>
 /// Our main GUI.
@@ -327,13 +325,13 @@ public partial class MainForm : Form
 
         var width = nudWidth.Value;
         var height = nudHeight.Value;
-        
+
         if (useHeight)
             width = Math.Round(height * image.Width / image.Height);
-        
+
         else
             height = Math.Round(width * image.Height / image.Width);
-        
+
 
         if (width != nudWidth.Value)
             nudWidth.Value = width;
@@ -415,23 +413,12 @@ public partial class MainForm : Form
     /// </summary>
     /// <param name="e">The <see cref="System.Windows.Forms.DragEventArgs"/> instance containing the event data.</param>
     /// <returns>The list of files which could be accepted.</returns>
-    private static string[] _GetSupportedFiles(DragEventArgs e)
+    private static string[]? _GetSupportedFiles(DragEventArgs e)
     {
         var files = ((Array)e?.Data.GetData(DataFormats.FileDrop))?.OfType<string>().ToArray();
         if (files == null || files.Length < 1)
             return null;
-        return files.Where(f => _IsSupportedFileExtension(Path.GetExtension(f)) || string.Equals(ScriptSerializer.DEFAULT_FILE_EXTENSION, Path.GetExtension(f))).ToArray();
+        return files.Where(f => _IsSupportedFileExtension(Path.GetExtension(f)) || string.Equals(Resources.Resources.defaultFileExtension, Path.GetExtension(f))).ToArray();
     }
 
-    /// <summary>
-    /// Applies the given script file to the source image.
-    /// </summary>
-    /// <param name="fileName">Name of the file.</param>
-    private void _ApplyScriptFile(string fileName)
-    {
-        var localEngine = new ScriptEngine();
-        localEngine.AddWithoutExecution(new NullTransformCommand());
-        ScriptSerializer.LoadFromFile(localEngine, fileName);
-        _ExecuteScriptActions(localEngine.Actions.ToArray());
-    }
 }

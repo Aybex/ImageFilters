@@ -23,7 +23,6 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Drawing.Imaging;
 using ImageFilters.Library.Imager;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ImageFilters.Library.Scripting.ScriptActions;
 

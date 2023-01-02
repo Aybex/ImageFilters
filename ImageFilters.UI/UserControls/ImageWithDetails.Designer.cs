@@ -1,4 +1,4 @@
-﻿namespace ImageFilters.UI.UserControls {
+﻿namespace ImageFilters.GUI.UserControls {
   partial class ImageWithDetails {
     /// <summary> 
     /// Required designer variable.

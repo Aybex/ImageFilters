@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #endregion
-namespace ImageFilters.UI.Classes; 
+namespace ImageFilters.CLI; 
 
 public enum CLIExitCode {
   RestartingInGuiMode = -1,

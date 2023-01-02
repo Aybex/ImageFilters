@@ -1,4 +1,6 @@
-﻿namespace ImageFilters.UI {
+﻿using ImageFilters.GUI.UserControls;
+
+namespace ImageFilters.GUI {
   partial class MainForm {
     /// <summary>
     /// Required designer variable.
@@ -45,8 +47,8 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tssBusy = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBenchmark = new System.Windows.Forms.ToolStripStatusLabel();
-            this.iwhSourceImage = new ImageFilters.UI.UserControls.ImageWithDetails();
-            this.iwhTargetImage = new ImageFilters.UI.UserControls.ImageWithDetails();
+            this.iwhSourceImage = new ImageWithDetails();
+            this.iwhTargetImage = new ImageWithDetails();
             this.butResize = new System.Windows.Forms.Button();
             this.butSwitch = new System.Windows.Forms.Button();
             this.butRepeat = new System.Windows.Forms.Button();

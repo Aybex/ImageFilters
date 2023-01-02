@@ -23,7 +23,7 @@ using System.Diagnostics;
 using System.Reflection;
 using ImageFilters.Library;
 
-namespace ImageFilters.UI.Windows; 
+namespace ImageFilters.GUI.Windows; 
 
 public partial class AboutWindow : Form {
   public AboutWindow() {

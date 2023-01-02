@@ -19,7 +19,7 @@
  */
 #endregion
 
-namespace ImageFilters.UI.Classes; 
+namespace ImageFilters.CLI; 
 
 public class ScriptSerializerException : Exception {
   public string Filename { get; }

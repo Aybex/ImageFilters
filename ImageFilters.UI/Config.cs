@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace ImageFilters.UI.Classes;
+namespace ImageFilters.GUI;
 
 /// <summary>
 /// This class stores the different configuration options of the application and handles config save/load

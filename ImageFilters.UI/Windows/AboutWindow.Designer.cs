@@ -1,4 +1,4 @@
-﻿namespace ImageFilters.UI.Windows {
+﻿namespace ImageFilters.GUI.Windows {
   partial class AboutWindow {
     /// <summary>
     /// Required designer variable.

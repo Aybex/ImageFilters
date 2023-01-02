@@ -20,20 +20,20 @@
 #endregion
 
 using System.Diagnostics.Contracts;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
 using ImageFilters.Library;
 using ImageFilters.Library.Scripting;
 using ImageFilters.Library.Scripting.ScriptActions;
 
-namespace ImageFilters.UI.Classes;
+namespace ImageFilters.CLI;
 
 /// <summary>
 /// The command line interface for the application.
 /// </summary>
-public static class CLI
+public static class CommandLine
 {
-
     /// <summary>
     /// Parses the command line arguments.
     /// </summary>
@@ -41,7 +41,10 @@ public static class CLI
     public static CLIExitCode ParseCommandLineArguments(string[]? arguments)
     {
         if (arguments is null || arguments.Length < 1)
+        {
+            _ShowHelp();
             return CLIExitCode.OK;
+        }
 
         var engine = new ScriptEngine();
         var line = string.Join(" ", arguments.Select(a => $@"""{a}"""));
@@ -130,15 +133,19 @@ public static class CLI
     /// </summary>
     private static void _ShowHelp()
     {
-
         var longestFilterNameLength = SupportedManipulators.MANIPULATORS.Select(k => k.Key.Length).Max();
-
         // we're loading the help text as a template from an public resource and then filling out the fields
-        var lines = Resources.Resources.CLIHelpText
-            .Replace("{appname}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyProductAttribute>(p => p.Product).ToString())
-            .Replace("{version}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyFileVersionAttribute>(v => v.Version).ToString())
-            .Replace("{copyright}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyCopyrightAttribute>(c => c.Copyright).ToString())
-            .Replace("{location}", Path.GetFileName(Assembly.GetEntryAssembly().Location))
+        var assembly = Assembly.GetExecutingAssembly();
+        var assemblyName = assembly.GetName().Name;
+        string assemblyVersion = assembly.GetName().Version.ToString();
+        var assemblyLocation = Path.GetFileName(assembly.Location);
+        string copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+        
+        var lines = Data.DataRessouces.CLIHelpText
+            .Replace("{appname}", assemblyName)
+            .Replace("{version}", assemblyVersion)
+            .Replace("{copyright}", copyright)
+            .Replace("{location}", assemblyLocation)
             .Replace("{filterlist}", string.Join(Environment.NewLine,
               from i in SupportedManipulators.MANIPULATORS
               let d = ReflectionUtils.GetDescriptionForClass(i.Value.GetType())
