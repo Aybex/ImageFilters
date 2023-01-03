@@ -19,14 +19,14 @@
  */
 #endregion
 
-namespace ImageFilters.CLI; 
+namespace ImageFilters.Library.Scripting; 
 
 public class ScriptSerializerException : Exception {
   public string Filename { get; }
   public int LineNumber { get; }
-  public CLIExitCode ErrorType { get; }
+  public ExitCode ErrorType { get; }
 
-  public ScriptSerializerException(string filename, int lineNumber, CLIExitCode errorType) {
+  public ScriptSerializerException(string filename, int lineNumber, ExitCode errorType) {
     Filename = filename;
     LineNumber = lineNumber;
     ErrorType = errorType;

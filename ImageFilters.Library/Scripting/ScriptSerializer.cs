@@ -23,11 +23,10 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using ImageFilters.Library.Imager.Interface;
-using ImageFilters.Library.Scripting;
 using ImageFilters.Library.Scripting.ScriptActions;
 using word = System.UInt16;
 
-namespace ImageFilters.CLI;
+namespace ImageFilters.Library.Scripting;
 
 public class ScriptSerializer
 {
@@ -95,9 +94,9 @@ public class ScriptSerializer
         for (var lineNumber = 0; lineNumber < content.Length; lineNumber++)
         {
             var line = content[lineNumber];
-            var cliExitCode = _ParseScriptLine(line, engine);
-            if (cliExitCode != CLIExitCode.OK)
-                throw new ScriptSerializerException(filename, lineNumber, cliExitCode);
+            var ExitCode = _ParseScriptLine(line, engine);
+            if (ExitCode != ExitCode.OK)
+                throw new ScriptSerializerException(filename, lineNumber, ExitCode);
         }
     }
 
@@ -109,9 +108,9 @@ public class ScriptSerializer
     public static void LoadFromString(ScriptEngine engine, string line)
     {
         Contract.Requires(engine != null);
-        var cliExitCode = _ParseScriptLine(line, engine);
-        if (cliExitCode != CLIExitCode.OK)
-            throw new ScriptSerializerException(null, 1, cliExitCode);
+        var ExitCode = _ParseScriptLine(line, engine);
+        if (ExitCode != ExitCode.OK)
+            throw new ScriptSerializerException(null, 1, ExitCode);
     }
 
     /// <summary>
@@ -119,16 +118,16 @@ public class ScriptSerializer
     /// </summary>
     /// <param name="line">The line.</param>
     /// <param name="engine">The engine.</param>
-    private static CLIExitCode _ParseScriptLine(string line, ScriptEngine engine)
+    private static ExitCode _ParseScriptLine(string line, ScriptEngine engine)
     {
         Contract.Requires(engine != null);
         if (string.IsNullOrWhiteSpace(line))
-            return CLIExitCode.OK;
+            return ExitCode.OK;
 
         var arguments = line.Split(' ');
         var length = arguments.Length;
         if (length < 1)
-            return CLIExitCode.OK;
+            return ExitCode.OK;
 
         var i = 0;
         while (i < length)
@@ -161,12 +160,12 @@ public class ScriptSerializer
                     {
                         if (length - i < 1)
                         {
-                            return CLIExitCode.TooLessArguments;
+                            return ExitCode.TooLessArguments;
                         }
                         var filename = arguments[i++];
                         if (filename == null)
                         {
-                            return CLIExitCode.FilenameMustNotBeNull;
+                            return ExitCode.FilenameMustNotBeNull;
                         }
 
                         engine.AddWithoutExecution(new LoadFileCommand(filename));
@@ -179,13 +178,13 @@ public class ScriptSerializer
                     {
                         if (length - i < 2)
                         {
-                            return CLIExitCode.TooLessArguments;
+                            return ExitCode.TooLessArguments;
                         }
                         var dimensions = arguments[i++].Trim();
                         var filterName = arguments[i++].Trim();
 
                         var result = _ParseResizeCommand(engine, dimensions, filterName);
-                        if (result != CLIExitCode.OK)
+                        if (result != ExitCode.OK)
                             return result;
                         break;
                     }
@@ -195,12 +194,12 @@ public class ScriptSerializer
                     {
                         if (length - i < 1)
                         {
-                            return CLIExitCode.TooLessArguments;
+                            return ExitCode.TooLessArguments;
                         }
                         var filename = arguments[i++];
                         if (filename == null)
                         {
-                            return CLIExitCode.FilenameMustNotBeNull;
+                            return ExitCode.FilenameMustNotBeNull;
                         }
 
                         engine.AddWithoutExecution(new SaveFileCommand(filename));
@@ -212,12 +211,12 @@ public class ScriptSerializer
                     {
                         if (length - i < 1)
                         {
-                            return CLIExitCode.TooLessArguments;
+                            return ExitCode.TooLessArguments;
                         }
                         var filename = arguments[i++];
                         if (filename == null)
                         {
-                            return CLIExitCode.FilenameMustNotBeNull;
+                            return ExitCode.FilenameMustNotBeNull;
                         }
 
                         LoadFromFile(engine, filename);
@@ -226,11 +225,11 @@ public class ScriptSerializer
                 #endregion
                 default:
                     {
-                        return CLIExitCode.UnknownParameter;
+                        return ExitCode.UnknownParameter;
                     }
             }
         }
-        return CLIExitCode.OK;
+        return ExitCode.OK;
     }
 
 
@@ -241,7 +240,7 @@ public class ScriptSerializer
     /// <param name="dimensions">The dimensions.</param>
     /// <param name="filterName">Name of the filter(and parameters if any).</param>
     /// <returns></returns>
-    private static CLIExitCode _ParseResizeCommand(ScriptEngine engine, string dimensions, string filterName)
+    private static ExitCode _ParseResizeCommand(ScriptEngine engine, string dimensions, string filterName)
     {
         Contract.Requires(engine != null);
         Contract.Requires(dimensions != null);
@@ -249,7 +248,7 @@ public class ScriptSerializer
 
         var match = _DIMENSIONS_REGEX.Match(dimensions);
         if (!match.Success)
-            return CLIExitCode.InvalidTargetDimensions;
+            return ExitCode.InvalidTargetDimensions;
 
         var width = match.Groups["width"].Value;
         var height = match.Groups["height"].Value;
@@ -260,19 +259,19 @@ public class ScriptSerializer
         word targetPercent = 0;
 
         if (!(string.IsNullOrWhiteSpace(width) || word.TryParse(width, out targetWidth)))
-            return CLIExitCode.CouldNotParseDimensionsAsWord;
+            return ExitCode.CouldNotParseDimensionsAsWord;
 
         if (!(string.IsNullOrWhiteSpace(height) || word.TryParse(height, out targetHeight)))
-            return CLIExitCode.CouldNotParseDimensionsAsWord;
+            return ExitCode.CouldNotParseDimensionsAsWord;
 
         if (!(string.IsNullOrWhiteSpace(percent) || word.TryParse(percent, out targetPercent)))
-            return CLIExitCode.CouldNotParseDimensionsAsWord;
+            return ExitCode.CouldNotParseDimensionsAsWord;
 
         var useAspect = targetWidth == 0 || targetHeight == 0;
 
         var filterMatch = _FILTER_REGEX.Match(filterName);
         if (!filterMatch.Success)
-            return CLIExitCode.InvalidFilterDescription;
+            return ExitCode.InvalidFilterDescription;
 
         var filterParams = filterMatch.Groups["params"].Value;
         filterName = filterMatch.Groups["filter"].Value;
@@ -315,7 +314,7 @@ public class ScriptSerializer
                             else if (value == TRANSPARENT_BOUNDS_VALUE)
                                 vbounds = OutOfBoundsMode.Transparent;
                             else
-                                return CLIExitCode.InvalidOutOfBoundsMode;
+                                return ExitCode.InvalidOutOfBoundsMode;
                             break;
                         }
                     case HBOUNDS_PARAMETER_NAME:
@@ -332,19 +331,19 @@ public class ScriptSerializer
                             else if (value == TRANSPARENT_BOUNDS_VALUE)
                                 hbounds = OutOfBoundsMode.Transparent;
                             else
-                                return CLIExitCode.InvalidOutOfBoundsMode;
+                                return ExitCode.InvalidOutOfBoundsMode;
                             break;
                         }
                     case RADIUS_PARAMETER_NAME:
                         {
                             if (!float.TryParse(pair.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out radius))
-                                return CLIExitCode.CouldNotParseParameterAsFloat;
+                                return ExitCode.CouldNotParseParameterAsFloat;
                             break;
                         }
                     case REPEAT_PARAMETER_NAME:
                         {
                             if (!byte.TryParse(pair.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out repeat))
-                                return CLIExitCode.CouldNotParseParameterAsByte;
+                                return ExitCode.CouldNotParseParameterAsByte;
                             break;
                         }
                     case CENTERED_GRID_PARAMETER_NAME:
@@ -359,7 +358,7 @@ public class ScriptSerializer
                         }
                     default:
                         {
-                            return CLIExitCode.UnknownParameter;
+                            return ExitCode.UnknownParameter;
                         }
                 }
             }
@@ -375,10 +374,10 @@ public class ScriptSerializer
           ;
 
         if (manipulator == null)
-            return CLIExitCode.UnknownFilter;
+            return ExitCode.UnknownFilter;
 
         engine.AddWithoutExecution(new ResizeCommand(true, manipulator, targetWidth, targetHeight, targetPercent, useAspect, hbounds, vbounds, repeat, useThresholds, useCenteredGrid, radius));
-        return CLIExitCode.OK;
+        return ExitCode.OK;
     }
 
     /// <summary>

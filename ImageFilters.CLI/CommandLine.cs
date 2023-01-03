@@ -38,12 +38,12 @@ public static class CommandLine
     /// Parses the command line arguments.
     /// </summary>
     /// <param name="arguments">The arguments.</param>
-    public static CLIExitCode ParseCommandLineArguments(string[]? arguments)
+    public static ExitCode ParseCommandLineArguments(string[]? arguments)
     {
         if (arguments is null || arguments.Length < 1)
         {
             _ShowHelp();
-            return CLIExitCode.OK;
+            return ExitCode.OK;
         }
 
         var engine = new ScriptEngine();
@@ -71,10 +71,10 @@ public static class CommandLine
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
-            return CLIExitCode.RuntimeError;
+            return ExitCode.RuntimeError;
         }
 
-        return CLIExitCode.OK;
+        return ExitCode.OK;
     }
 
     private static void _PreAction(ScriptEngine engine, IScriptAction command)
@@ -210,12 +210,12 @@ public static class CommandLine
     /// <param name="fullFilePath">The filename.</param>
     /// <param name="image">The image.</param>
     /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
-    public static CLIExitCode SaveHelper(string fullFilePath, Image image)
+    public static ExitCode SaveHelper(string fullFilePath, Image image)
     {
         Contract.Requires(fullFilePath != null);
 
         if (image == null)
-            return CLIExitCode.NothingToSave;
+            return ExitCode.NothingToSave;
 
         var extension = Path.GetExtension(fullFilePath)?.ToUpperInvariant();
 
@@ -233,7 +233,7 @@ public static class CommandLine
                         codecs = codecs.Where(info => info != null && info.MimeType == "image/jpeg").ToArray();
                         if (codecs.Length <= 0)
                         {
-                            return CLIExitCode.JpegNotSupportedOnThisPlatform;
+                            return ExitCode.JpegNotSupportedOnThisPlatform;
                         }
                         Contract.Assume(Encoder.Quality != null);
                         image.Save(temporaryFileName, codecs[0], new EncoderParameters
@@ -257,7 +257,7 @@ public static class CommandLine
             }
 
             if (!File.Exists(temporaryFileName))
-                return CLIExitCode.TargetFileCouldNotBeSaved;
+                return ExitCode.TargetFileCouldNotBeSaved;
 
             File.Copy(temporaryFileName, fullFilePath, true);
             File.Delete(temporaryFileName);
@@ -265,14 +265,14 @@ public static class CommandLine
         catch (Exception)
         {
             if (!File.Exists(temporaryFileName))
-                return CLIExitCode.ExceptionDuringImageWrite;
+                return ExitCode.ExceptionDuringImageWrite;
 
             // removing temp file again
             _TryDeleteFile(temporaryFileName);
-            return CLIExitCode.ExceptionDuringImageWrite;
+            return ExitCode.ExceptionDuringImageWrite;
         }
 
-        return CLIExitCode.OK;
+        return ExitCode.OK;
     }
 
     private static bool _TryDeleteFile(string fileName)

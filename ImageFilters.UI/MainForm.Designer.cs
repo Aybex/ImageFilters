@@ -155,7 +155,7 @@ namespace ImageFilters.GUI {
             // 
             // tssBusy
             // 
-            this.tssBusy.Image = global::ImageFilters.UI.Resources.Resources.ProgressCircularBlue;
+            this.tssBusy.Image = global::ImageFilters.GUI.Resources.Resources.ProgressCircularBlue;
             this.tssBusy.Name = "tssBusy";
             this.tssBusy.Size = new System.Drawing.Size(93, 20);
             this.tssBusy.Text = "Resizing...";
@@ -233,7 +233,7 @@ namespace ImageFilters.GUI {
             // 
             // butResize
             // 
-            this.butResize.Image = global::ImageFilters.UI.Resources.Resources.Resize;
+            this.butResize.Image = global::ImageFilters.GUI.Resources.Resources.Resize;
             this.butResize.Location = new System.Drawing.Point(4, 5);
             this.butResize.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.butResize.Name = "butResize";
@@ -246,7 +246,7 @@ namespace ImageFilters.GUI {
             // 
             // butSwitch
             // 
-            this.butSwitch.Image = global::ImageFilters.UI.Resources.Resources.Switch;
+            this.butSwitch.Image = global::ImageFilters.GUI.Resources.Resources.Switch;
             this.butSwitch.Location = new System.Drawing.Point(112, 5);
             this.butSwitch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.butSwitch.Name = "butSwitch";
@@ -259,7 +259,7 @@ namespace ImageFilters.GUI {
             // 
             // butRepeat
             // 
-            this.butRepeat.Image = global::ImageFilters.UI.Resources.Resources.Repeat;
+            this.butRepeat.Image = global::ImageFilters.GUI.Resources.Resources.Repeat;
             this.butRepeat.Location = new System.Drawing.Point(220, 5);
             this.butRepeat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.butRepeat.Name = "butRepeat";
