@@ -1,10 +1,10 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using BenchmarkDotNet.Attributes;
-using ImageFilters.Library;
-using ImageFilters.Library.Imager.Interface;
-using ImageFilters.Library.Scripting;
-using ImageFilters.Library.Scripting.ScriptActions;
+using ImageFilters;
+using ImageFilters.Imager.Interface;
+using ImageFilters.Scripting;
+using ImageFilters.Scripting.ScriptActions;
 
 namespace ImageFilters.Benchmark
 {

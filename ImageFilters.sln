@@ -3,19 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters.GUI", "ImageFilters.UI\ImageFilters.GUI.csproj", "{7CC5739D-1C26-400E-8E3C-A801640E982A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5EF2DB26-4666-4A6D-B90B-274326C48397} = {5EF2DB26-4666-4A6D-B90B-274326C48397}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters.Library", "ImageFilters.Library\ImageFilters.Library.csproj", "{5EF2DB26-4666-4A6D-B90B-274326C48397}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters.Benchmark", "ImageFilters.Benchmark\ImageFilters.Benchmark.csproj", "{F670200F-6103-4D33-BB4D-FFBA1F98AD07}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5EF2DB26-4666-4A6D-B90B-274326C48397} = {5EF2DB26-4666-4A6D-B90B-274326C48397}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters.CLI", "ImageFilters.CLI\ImageFilters.CLI.csproj", "{DDBB009C-2704-440D-A099-E7CAF8B51B3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters", "ImageFilters\ImageFilters.csproj", "{AA27C86E-C360-4682-9FE8-49AFA4B867E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageFilters.GUI", "ImageFilters.GUI\ImageFilters.GUI.csproj", "{30E5E3C1-3252-4B71-A300-A5B056AA4704}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7CC5739D-1C26-400E-8E3C-A801640E982A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CC5739D-1C26-400E-8E3C-A801640E982A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CC5739D-1C26-400E-8E3C-A801640E982A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CC5739D-1C26-400E-8E3C-A801640E982A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5EF2DB26-4666-4A6D-B90B-274326C48397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5EF2DB26-4666-4A6D-B90B-274326C48397}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5EF2DB26-4666-4A6D-B90B-274326C48397}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5EF2DB26-4666-4A6D-B90B-274326C48397}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F670200F-6103-4D33-BB4D-FFBA1F98AD07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F670200F-6103-4D33-BB4D-FFBA1F98AD07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F670200F-6103-4D33-BB4D-FFBA1F98AD07}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +25,14 @@ Global
 		{DDBB009C-2704-440D-A099-E7CAF8B51B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDBB009C-2704-440D-A099-E7CAF8B51B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDBB009C-2704-440D-A099-E7CAF8B51B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA27C86E-C360-4682-9FE8-49AFA4B867E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA27C86E-C360-4682-9FE8-49AFA4B867E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA27C86E-C360-4682-9FE8-49AFA4B867E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA27C86E-C360-4682-9FE8-49AFA4B867E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E5E3C1-3252-4B71-A300-A5B056AA4704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E5E3C1-3252-4B71-A300-A5B056AA4704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E5E3C1-3252-4B71-A300-A5B056AA4704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E5E3C1-3252-4B71-A300-A5B056AA4704}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

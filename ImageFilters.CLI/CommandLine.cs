@@ -23,9 +23,8 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
-using ImageFilters.Library;
-using ImageFilters.Library.Scripting;
-using ImageFilters.Library.Scripting.ScriptActions;
+using ImageFilters.Scripting;
+using ImageFilters.Scripting.ScriptActions;
 
 namespace ImageFilters.CLI;
 
