@@ -8,9 +8,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<PlatformTarget>x64</PlatformTarget>
-		<ApplicationIcon>Resources\App.ico</ApplicationIcon>
 		<AssemblyName>ImageFilters</AssemblyName>
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<ApplicationIcon>Resources\App.ico</ApplicationIcon>
+		<Copyright>© 2022 Aybex</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>

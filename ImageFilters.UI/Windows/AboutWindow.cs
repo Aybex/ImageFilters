@@ -23,27 +23,37 @@ using System.Diagnostics;
 using System.Reflection;
 using ImageFilters.Library;
 
-namespace ImageFilters.GUI.Windows; 
+namespace ImageFilters.GUI.Windows;
 
-public partial class AboutWindow : Form {
-  public AboutWindow() {
-    InitializeComponent();
+public partial class AboutWindow : Form
+{
+    public AboutWindow()
+    {
+        InitializeComponent();
 
-    var link = new LinkLabel.Link { LinkData = Resources.Resources.urlProject };
-    llaHomepage.Links.Add(link);
+        var link = new LinkLabel.Link { LinkData = Resources.Resources.urlProject };
+        llaHomepage.Links.Add(link);
 
-    lblInfo.Text = lblInfo.Text
-        .Replace("{appname}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyProductAttribute>(p => p.Product).ToString())
-        .Replace("{version}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyFileVersionAttribute>(v => v.Version).ToString())
-        .Replace("{copyright}", ReflectionUtils.GetEntryAssemblyAttribute<AssemblyCopyrightAttribute>(c => c.Copyright).ToString())
-      ;
-  }
+        var assembly = Assembly.GetExecutingAssembly();
+        var assemblyName = assembly.GetName().Name;
+        string assemblyVersion = assembly.GetName().Version.ToString();
+        string copyright = assembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
 
-  private void butOK_Click(object sender, EventArgs e) {
-    Close();
-  }
 
-  private void llaHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-    Process.Start(e.Link.LinkData as string);
-  }
+        //var appName = 
+        lblInfo.Text = lblInfo.Text
+            .Replace("{appname}", assemblyName)
+            .Replace("{version}", assemblyVersion)
+            .Replace("{copyright}", copyright);
+    }
+
+    private void butOK_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private void llaHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        Process.Start(e.Link.LinkData as string);
+    }
 }
