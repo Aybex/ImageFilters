@@ -180,4 +180,13 @@ public class ScriptEngine
         while (actions.Any() && !actions.Last().ChangesSourceImage)
             actions.RemoveAt(actions.Count - 1);
     }
+
+
+    public void LoadImage(Bitmap loadBitmap)
+    {
+        IsSourceImageChanged = true;
+        IsTargetImageChanged = true;
+
+        SourceImage = cImage.FromBitmap(_gdiSource = new Bitmap(loadBitmap));
+    }
 }
