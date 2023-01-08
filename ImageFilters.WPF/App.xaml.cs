@@ -73,13 +73,6 @@ namespace ImageFilters.WPF
         private async void OnStartup(object sender, StartupEventArgs e)
         {
             await _host.StartAsync();
-
-
-            Console.WriteLine("\n App XAML");
-
-            Thread thread = Thread.CurrentThread;
-            Console.WriteLine($"Background: {thread.IsBackground}\n Thread Pool: {thread.IsThreadPoolThread}\n Thread ID: {thread.ManagedThreadId}\n");
-
         }
 
         /// <summary>

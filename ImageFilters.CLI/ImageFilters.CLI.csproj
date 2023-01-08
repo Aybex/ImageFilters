@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImageFilters\ImageFilters.csproj" />
+    <ProjectReference Include="..\ImageFilters.Core\ImageFilters.Core.csproj" />
   </ItemGroup>
+
+
 
   <ItemGroup>
     <Compile Update="Data\DataRessouces.Designer.cs">

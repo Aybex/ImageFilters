@@ -23,8 +23,10 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Reflection;
-using ImageFilters.Scripting;
-using ImageFilters.Scripting.ScriptActions;
+using ImageFilters.Core;
+using ImageFilters.Core.Scripting;
+using ImageFilters.Core.Scripting.ScriptActions;
+
 
 namespace ImageFilters.CLI;
 

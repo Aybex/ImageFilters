@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Imaging;
 using Wpf.Ui.Common.Interfaces;
 
@@ -27,35 +25,16 @@ namespace ImageFilters.WPF.Views.Pages
         private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
             //Open file dialog
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
-            if (dialog.ShowDialog() == true)
+            Microsoft.Win32.OpenFileDialog dialog = new()
             {
-                //Load image
-                var image = new BitmapImage(new Uri(dialog.FileName));
-
-                ViewModel.SrcImage = BitmapSourceToBitmap(image);
-                //Show image
-                sourceImage.Source = image;
-            }
-
+                Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*"
+            };
+            
+            if (dialog.ShowDialog() != true) return;
+            var image = new BitmapImage(new Uri(dialog.FileName));
+            ViewModel.SourceImage = image;
         }
 
-
-
-        private static Bitmap BitmapSourceToBitmap(BitmapSource bitmapImage)
-        {
-
-            using (MemoryStream outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(outStream);
-
-                return new Bitmap(bitmap);
-            }
-        }
     }
 }
             

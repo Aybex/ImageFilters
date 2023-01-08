@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ImageFilters\ImageFilters.csproj" />
+	  <ProjectReference Include="..\ImageFilters.Core\ImageFilters.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
