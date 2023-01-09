@@ -6,17 +6,12 @@ using ImageFilters.Core;
 using ImageFilters.Core.Imager.Interface;
 using ImageFilters.Core.Scripting;
 using ImageFilters.Core.Scripting.ScriptActions;
-using SkiaSharp;
-using LiveChartsCore;
-using LiveChartsCore.Defaults;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using ImageFilters.WPF.Helpers;
-using Wpf.Ui.Common.Interfaces;
+using ImageFilters.GUI.Helpers;
 
-namespace ImageFilters.WPF.ViewModels;
 
-public partial class DashboardViewModel : ObservableObject, INavigationAware
+namespace ImageFilters.GUI.ViewModels;
+
+public partial class MainWindowViewModel : ObservableObject
 {
     //Fields
     private bool _isInitialized;
@@ -38,25 +33,12 @@ public partial class DashboardViewModel : ObservableObject, INavigationAware
     public string SourceSize => $"W : {SourceWidth} | H : {SourceHeight}";
     public string TargetSize => $"W : {TargetWidth} | H : {TargetHeight}";
 
+    public MainWindowViewModel()
+    {
+        SelectedFilter = Filters.First();
+        _isInitialized = true;
+    }
     //TODO: Implement Kernel function visualisation
-    public ISeries[] Series { get; set; } = new ISeries[]
-        {
-        new LineSeries<ObservablePoint>
-        {
-          //  Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
-            Values = new ObservableCollection<ObservablePoint>
-            {
-                new (-1, 2),
-                new (-0.5, 0.5),
-                new (0, 1),
-                new (.5, .5),
-                new (1, 2),
-
-            },
-            Fill = new SolidColorPaint(SKColor.Parse("00A881")),
-            GeometrySize = 0,
-        }
-        };
 
     //generate onchage
     partial void OnSourceImageChanged(BitmapImage value)
@@ -98,26 +80,6 @@ public partial class DashboardViewModel : ObservableObject, INavigationAware
         TargetImage = _scriptEngine.GdiTarget.ToBitmapImage();
     }
 
-
-
-
-
-
-    public void OnNavigatedTo()
-    {
-
-        if (!_isInitialized)
-            InitializeViewModel();
-    }
-
-    public void OnNavigatedFrom()
-    {
-    }
-
-    private void InitializeViewModel()
-    {
-        SelectedFilter = Filters.First();
-        _isInitialized = true;
-    }
+    
 
 }

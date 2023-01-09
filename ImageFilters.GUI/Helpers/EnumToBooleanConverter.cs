@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace ImageFilters.WPF.Helpers
+namespace ImageFilters.GUI.Helpers
 {
     internal class EnumToBooleanConverter : IValueConverter
     {

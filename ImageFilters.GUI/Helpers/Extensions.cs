@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 
-namespace ImageFilters.WPF.Helpers;
+namespace ImageFilters.GUI.Helpers;
 
 public static class Extensions
 {

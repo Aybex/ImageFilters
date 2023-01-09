@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Assets\Icon-256-ICO.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Icon-256-ICO.ico" />
+    <None Remove="Assets\Icon-256.png" />
+    <None Remove="Assets\Icon-512.png" />
+    <None Remove="Assets\placeholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Icon-256-ICO.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview3" />
+    <PackageReference Include="WPF-UI" Version="2.0.4-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImageFilters.Core\ImageFilters.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icon-256-ICO.ico" />
+    <Resource Include="Assets\Icon-256.png" />
+    <Resource Include="Assets\Icon-512.png" />
+    <Resource Include="Assets\placeholder.png" />
+  </ItemGroup>
+
+</Project>
