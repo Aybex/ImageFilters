@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace ImageFilters.WPF.Helpers
+namespace ImageFilters.GUI.Helpers
 {
     internal class IntToImageWidthConverter : IValueConverter
     {
