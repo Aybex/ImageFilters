@@ -1,6 +1,7 @@
 ﻿using ImageFilters.GUI.ViewModels;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using ImageFilters.GUI.Helpers;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls.Window;
 
@@ -14,7 +15,6 @@ public partial class MainWindow
     {
         DataContext = ViewModel= new MainWindowViewModel();
         
-        Console.WriteLine(ViewModel.SourceWidth);
         Watcher.Watch(this,WindowBackdropType.Acrylic);
 
         InitializeComponent();
@@ -33,4 +33,15 @@ public partial class MainWindow
         ViewModel.SourceImage = image;
     }
 
+    private void SaveImage_Click(object sender, RoutedEventArgs e)
+    {
+        //Open file dialog
+        Microsoft.Win32.SaveFileDialog dialog = new()
+        {
+            Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+        ViewModel.TargetImage.Save(dialog.FileName);
+    }
 }
