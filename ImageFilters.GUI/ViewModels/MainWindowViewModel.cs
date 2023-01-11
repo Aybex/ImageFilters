@@ -13,6 +13,7 @@ using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using LiveChartsCore.SkiaSharpView.WPF;
 using SkiaSharp;
 
@@ -40,42 +41,44 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty] private bool _keepAspect;
 
     private IImageManipulator FilterMethod => SelectedFilter!.Value.Value;
-    
+
     public ISeries[] Series { get; set; } =
     {
         new LineSeries<ObservablePoint>
         {
-            Values = new ObservablePoint[]
-            {
-                new(-2f,0f),
-                new(-1.75f,-0.02f),
-                new(-1.5f,-0.06f),
-                new(-1.25f,-0.07f),
-                new(-1f,0f),
-                new(-0.75f,0.23f),
-                new(-0.5f,0.56f),
-                new(-0.25f,0.87f),
-                new(0f,1f),
-                new(0.25f,0.87f),
-                new(0.5f,0.56f),
-                new(0.75f,0.23f),
-                new(1f,0f),
-                new(1.25f,-0.07f),
-                new(1.5f,-0.06f),
-                new(1.75f,-0.02f),
-                new(2f,0f)
-            },
-            // Set he Fill property to build an area series
-            // by default the series has a fill color based on your app theme
-            Fill = new SolidColorPaint(SKColors.CornflowerBlue),
+			
+			// Set he Fill property to build an area series
+			// by default the series has a fill color based on your app theme
+			Fill = new SolidColorPaint(SKColors.CornflowerBlue),
 
             Stroke = null,
             GeometryFill = null,
             GeometryStroke = null,
-            
+
         }
     };
-    
+
+    public Axis[] XAxes { get; set; } = {
+    new() {
+        NamePaint = new SolidColorPaint(SKColors.White),
+        LabelsPaint = new SolidColorPaint(SKColors.White),
+        TextSize = 10,
+        MinStep = 0.5,
+        SeparatorsPaint = new SolidColorPaint(SKColors.White) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
+    }};
+
+    public Axis[] YAxes { get; set; } = {
+    new() {
+        NamePaint = new SolidColorPaint(SKColors.White),
+        LabelsPaint = new SolidColorPaint(SKColors.White),
+        TextSize = 10,
+        MinStep = 1,
+
+        SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
+    }};
+
+
+
     public string TargetSize => (TargetImage is null ? $"W : {0} | H : {0}"
                                     : $"W : {TargetImage.PixelWidth} | H : {TargetImage.PixelHeight}");
 
@@ -103,22 +106,30 @@ public partial class MainWindowViewModel : ObservableObject
 
     partial void OnSelectedFilterChanged(KeyValuePair<string, IImageManipulator>? value)
     {
-        if(value is null)
-            return;
-        
-        var method = value.Value.Value;
-        var kernelBasedResampler = method as Resampler;
-        var kernelBasedRadiusResampler = method as RadiusResampler;
-        if (kernelBasedResampler is null && kernelBasedRadiusResampler is null)
-            return;
-
-        var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(2) ?? kernelBasedResampler!.GetKernelMethodInfo();
-
         List<ObservablePoint> values = new();
-        
-        for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.1f)
-            values.Add(new(x, Math.Round(info.Kernel(x), 3)));
+        if (value is not null)
+        {
+            var method = value.Value.Value;
+            var kernelBasedResampler = method as Resampler;
+            var kernelBasedRadiusResampler = method as RadiusResampler;
+            if (kernelBasedResampler is null && kernelBasedRadiusResampler is null)
+                return;
 
+            var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(2) ?? kernelBasedResampler!.GetKernelMethodInfo();
+
+
+            double minY = 0f;
+            for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.05f)
+            {
+                var y = Math.Round(info.Kernel(x), 3);
+                if (y < minY)
+                    minY = y;
+                values.Add(new(x, y));
+
+            }
+
+            YAxes[0].MinLimit = minY - 0.5f;
+        }
         Series[0].Values = values;
     }
     [RelayCommand]
