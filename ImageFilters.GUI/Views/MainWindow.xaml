@@ -6,6 +6,7 @@
 		xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
 		xmlns:local="clr-namespace:ImageFilters.GUI.Views"
 		xmlns:vm="clr-namespace:ImageFilters.GUI.ViewModels"
+		xmlns:enums="clr-namespace:ImageFilters.Core.Imager.Interface;assembly=ImageFilters.Core"
 		xmlns:system="clr-namespace:System;assembly=System.Runtime"
 		xmlns:helpers="clr-namespace:ImageFilters.GUI.Helpers" x:Class="ImageFilters.GUI.Views.MainWindow"
 		xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
@@ -22,17 +23,14 @@
 		mc:Ignorable="d"
 		d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}">
 
-
 	<ui:FluentWindow.Resources>
 		<helpers:BoolInverter x:Key="BoolInverter"/>
-		<BooleanToVisibilityConverter x:Key="BoolToVis" />
+		<helpers:BoolToVisibilityInversed x:Key="BoolToVis" />
 		<BitmapImage x:Key="DefaultImage" UriSource="/Assets/placeholder.png" />
 
 		<CornerRadius x:Key="ImgCorner" TopLeft="5" BottomLeft="5" BottomRight="5" TopRight="5"/>
 		<system:String x:Key="DefaultSize">W : 0 | H : 0</system:String>
 	</ui:FluentWindow.Resources>
-
-
 
 	<Grid>
 
@@ -41,18 +39,10 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-
 		<ui:TitleBar
 			Title="WPF UI - Simple Demo"
 			Grid.Row="0"
 			Icon="pack://application:,,,/Assets/Icon-256.png">
-			<ui:TitleBar.Tray>
-				<ui:NotifyIcon
-					FocusOnLeftClick="True"
-					Icon="pack://application:,,,/Assets/Icon-256.png"
-					MenuOnRightClick="True"
-					TooltipText="Wpf.Ui.Demo.Simple"/>
-			</ui:TitleBar.Tray>
 		</ui:TitleBar>
 		<Grid Grid.Row="1" Background="#13FFFFFF">
 
@@ -62,73 +52,75 @@
 		VirtualizingPanel.IsVirtualizing="True"
 		VirtualizingPanel.VirtualizationMode="Recycling">
 
-				<Grid x:Name="SourceGeid">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
+				<Border>
+					<Grid x:Name="SourceGeid">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
 
-					<Border Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
-						<StackPanel >
-							<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="#0AFFFFFF">
-								<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Source Image"/></TextBlock>
-							</Border>
+						<Border Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
+							<StackPanel >
+								<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="#4300FF59">
+									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Source Image"/></TextBlock>
+								</Border>
 
-							<WrapPanel x:Name="SourceImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-								<WrapPanel.OpacityMask>
-									<VisualBrush >
-										<VisualBrush.Visual>
-											<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
-										</VisualBrush.Visual>
-									</VisualBrush>
-								</WrapPanel.OpacityMask>
-								<Image Source="{Binding SourceImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-							</WrapPanel>
-							<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding SourceSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
-						</StackPanel>
-					</Border>
-					<Border Grid.Column="1" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
-						<StackPanel >
-							<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="#0AFFFFFF">
-								<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Target Image"/></TextBlock>
-							</Border>
+								<WrapPanel x:Name="SourceImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<WrapPanel.OpacityMask>
+										<VisualBrush >
+											<VisualBrush.Visual>
+												<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
+											</VisualBrush.Visual>
+										</VisualBrush>
+									</WrapPanel.OpacityMask>
+									<Image Source="{Binding SourceImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								</WrapPanel>
+								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding SourceSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
+							</StackPanel>
+						</Border>
+						<Border Grid.Column="1" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
+							<StackPanel >
+								<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="#4300FF59">
+									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Target Image"/></TextBlock>
+								</Border>
 
-							<WrapPanel x:Name="TargetImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-								<WrapPanel.OpacityMask>
-									<VisualBrush >
-										<VisualBrush.Visual>
-											<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
-										</VisualBrush.Visual>
-									</VisualBrush>
-								</WrapPanel.OpacityMask>
-								<Image Source="{Binding TargetImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-							</WrapPanel>
-
-
-							<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding TargetSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
-						</StackPanel>
-					</Border>
+								<WrapPanel x:Name="TargetImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<WrapPanel.OpacityMask>
+										<VisualBrush >
+											<VisualBrush.Visual>
+												<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
+											</VisualBrush.Visual>
+										</VisualBrush>
+									</WrapPanel.OpacityMask>
+									<Image Source="{Binding TargetImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								</WrapPanel>
 
 
+								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding TargetSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
+							</StackPanel>
+						</Border>
 
 
-					<Border Grid.Column="2" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
-						<Grid>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="1*"/>
-								<RowDefinition Height="1*"/>
-								<RowDefinition Height="1*"/>
-								<RowDefinition Height="1*"/>
-							</Grid.RowDefinitions>
 
-							<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
-							<ui:Button Grid.Row="1" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
-							<ui:Button Grid.Row="2" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
-							<ui:Button Grid.Row="3" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
-						</Grid>
-					</Border>
-				</Grid>
+
+						<Border Grid.Column="2" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
+							<Grid>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+									<RowDefinition Height="1*"/>
+								</Grid.RowDefinitions>
+
+								<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
+								<ui:Button Grid.Row="1" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+								<ui:Button Grid.Row="2" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
+								<ui:Button Grid.Row="3" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+							</Grid>
+						</Border>
+					</Grid>
+				</Border>
 
 				<Grid Height="400">
 
@@ -157,10 +149,10 @@
 							</StackPanel>
 						</ui:CardControl.Header>
 
-						<ComboBox SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" ItemsSource="{Binding Filters, Mode=OneWay}" SelectedValuePath="Value" DisplayMemberPath="Key"
+						<ComboBox SelectedValue="{Binding SelectedFilter, Mode=TwoWay}" ItemsSource="{Binding Filters, Mode=OneWay}" SelectedValuePath="Value" DisplayMemberPath="Key"
 						          x:Name="Filters"  Height="56" Width="290" SelectedIndex="0"/>
 					</ui:CardControl>
-					<ui:CardControl Grid.Row="1" Grid.Column="0" Icon="ArrowAutofitWidth20" VerticalAlignment="Top" Height="70" Margin="5">
+					<ui:CardControl Grid.Row="1" Grid.Column="0" Icon="ArrowAutofitWidth20" VerticalAlignment="Top" Height="70" Margin="5" IsEnabled="{Binding SelectedFilter.SupportsWidth}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -173,11 +165,11 @@
 							</StackPanel>
 						</ui:CardControl.Header>
 						<WrapPanel>
-							<ui:NumberBox Text="{Binding TargetWidth, Mode=TwoWay}" Min="0" IntegersOnly="True"  PlaceholderText="1920" SpinButtonsEnabled="False" Width="100"/>
+							<ui:NumberBox Text="{Binding TargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Min="0" IntegersOnly="True"  PlaceholderText="1920" SpinButtonsEnabled="False" Width="100"/>
 							<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
 						</WrapPanel>
 					</ui:CardControl>
-					<ui:CardControl Grid.Row="1" Grid.Column="1"  IsEnabled="{Binding KeepAspect, Converter={StaticResource BoolInverter}}" Icon="ArrowAutofitHeight20" Height="70" Margin="5">
+					<ui:CardControl Grid.Row="1" Grid.Column="1"  IsEnabled="{Binding SelectedFilter.SupportsHeight}" Icon="ArrowAutofitHeight20" Height="70" Margin="5" >
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -189,7 +181,7 @@
 							Text="Target height of the result image" />
 							</StackPanel>
 						</ui:CardControl.Header>
-						<WrapPanel>
+						<WrapPanel Visibility="{Binding KeepAspect, Converter={StaticResource BoolToVis}}">
 							<ui:NumberBox Min="0" IntegersOnly="True" Text="{Binding TargetHeight, Mode=TwoWay}" PlaceholderText="1920" SpinButtonsEnabled="False" Width="100"/>
 							<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
 						</WrapPanel>
@@ -209,7 +201,7 @@
 						<ui:ToggleSwitch IsChecked="{Binding KeepAspect, Mode=TwoWay}"/>
 					</ui:CardControl>
 
-					<ui:CardControl Grid.Row="2" Grid.Column="1" Icon="BorderLeftRight24" Height="70"  Margin="5">
+					<ui:CardControl Grid.Row="2" Grid.Column="1" Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.ChangesResolution}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -221,7 +213,7 @@
 							Text="Border extrapolation" />
 							</StackPanel>
 						</ui:CardControl.Header>
-						<ComboBox Width="194"/>
+                        <ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
 					</ui:CardControl>
 					<Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" CornerRadius="5" Background="#11FFFFFF">
 						<lvc:CartesianChart 
@@ -241,11 +233,11 @@
 									Text="Keep original image's aspect ratio" />
 							</StackPanel>
 						</ui:CardControl.Header>
-						<ui:ToggleSwitch IsChecked="{Binding KeepAspect, Mode=TwoWay}"/>
+						<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
 					</ui:CardControl>
 
 
-					<ui:CardControl Grid.Row="4" Grid.Column="1" Icon="BorderLeftRight24" Height="70"  Margin="5">
+					<ui:CardControl Grid.Row="4" Grid.Column="1" Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.SupportsRadius}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -257,7 +249,7 @@
 									Text="Border extrapolation" />
 							</StackPanel>
 						</ui:CardControl.Header>
-						<ui:NumberBox/>
+						<ui:NumberBox Text="{Binding Radius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Min="0" Step="0.1" />
 					</ui:CardControl>
 				</Grid>
 			</VirtualizingStackPanel>
