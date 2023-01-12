@@ -21,161 +21,161 @@ namespace ImageFilters.GUI.ViewModels;
 
 public partial class MainWindowViewModel : ObservableObject
 {
-    //Fields
-    private readonly ScriptEngine _scriptEngine = new();
+	//Fields
+	private readonly ScriptEngine _scriptEngine = new();
 
-    [NotifyPropertyChangedFor(nameof(SourceSize))]
-    [ObservableProperty] private BitmapImage? _sourceImage;
-    [ObservableProperty] private bool _imageNotLoaded = true;
-    [ObservableProperty] private ushort _sourceWidth;
-    [ObservableProperty] private ushort _sourceHeight;
-    [ObservableProperty] private Dictionary<string, IImageManipulator> _filters = SupportedManipulators.MANIPULATORS.ToDictionary(x => x.Key, y => y.Value);
+	[NotifyPropertyChangedFor(nameof(SourceSize))]
+	[ObservableProperty] private BitmapImage? _sourceImage;
+	[ObservableProperty] private bool _imageNotLoaded = true;
+	[ObservableProperty] private ushort _sourceWidth;
+	[ObservableProperty] private ushort _sourceHeight;
+	[ObservableProperty] private Dictionary<string, IImageManipulator> _filters = new(SupportedManipulators.MANIPULATORS) ;
 
-    [NotifyPropertyChangedFor(nameof(FilterMethod))]
-    [ObservableProperty] private KeyValuePair<string, IImageManipulator>? _selectedFilter;
+	[ObservableProperty] private IImageManipulator _selectedFilter;
 
-    [NotifyPropertyChangedFor(nameof(TargetSize))]
-    [ObservableProperty] private BitmapImage? _targetImage;
-    [ObservableProperty] private ushort _targetWidth;
-    [ObservableProperty] private ushort _targetHeight;
-    [ObservableProperty] private bool _keepAspect;
+	[NotifyPropertyChangedFor(nameof(TargetSize))]
+	[ObservableProperty] private BitmapImage? _targetImage;
+	[ObservableProperty] private ushort _targetWidth;
+	[ObservableProperty] private ushort _targetHeight;
+	[ObservableProperty] private bool _keepAspect;
+	[ObservableProperty] private bool _useCentralGrid;
 
-    private IImageManipulator FilterMethod => SelectedFilter!.Value.Value;
+	[NotifyPropertyChangedFor(nameof(SelectedFilter))]
+	[ObservableProperty] private float _radius = 1;
 
-    public ISeries[] Series { get; set; } =
-    {
-        new LineSeries<ObservablePoint>
-        {
+	[ObservableProperty] private OutOfBoundsMode _boundsMode;
+
+	public ISeries[] Series { get; set; } =
+	{
+		new LineSeries<ObservablePoint>
+		{
 			
 			// Set he Fill property to build an area series
 			// by default the series has a fill color based on your app theme
 			Fill = new SolidColorPaint(SKColors.CornflowerBlue),
 
-            Stroke = null,
-            GeometryFill = null,
-            GeometryStroke = null,
+			Stroke = null,
+			GeometryFill = null,
+			GeometryStroke = null,
 
-        }
-    };
+		}
+	};
+	public Axis[] XAxes { get; set; } = {
+	new() {
+		NamePaint = new SolidColorPaint(SKColors.White),
+		LabelsPaint = new SolidColorPaint(SKColors.White),
+		TextSize = 10,
+		MinStep = 0.5,
+		SeparatorsPaint = new SolidColorPaint(SKColors.White) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
+	}};
+	public Axis[] YAxes { get; set; } = {
+	new() {
+		NamePaint = new SolidColorPaint(SKColors.White),
+		LabelsPaint = new SolidColorPaint(SKColors.White),
+		TextSize = 10,
+		MinStep = 1,
 
-    public Axis[] XAxes { get; set; } = {
-    new() {
-        NamePaint = new SolidColorPaint(SKColors.White),
-        LabelsPaint = new SolidColorPaint(SKColors.White),
-        TextSize = 10,
-        MinStep = 0.5,
-        SeparatorsPaint = new SolidColorPaint(SKColors.White) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
-    }};
-
-    public Axis[] YAxes { get; set; } = {
-    new() {
-        NamePaint = new SolidColorPaint(SKColors.White),
-        LabelsPaint = new SolidColorPaint(SKColors.White),
-        TextSize = 10,
-        MinStep = 1,
-
-        SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
-    }};
+		SeparatorsPaint = new SolidColorPaint(SKColors.LightSlateGray) { StrokeThickness = 1, PathEffect = new DashEffect(new float[] { 3, 3 }) }
+	}};
 
 
 
-    public string TargetSize => (TargetImage is null ? $"W : {0} | H : {0}"
-                                    : $"W : {TargetImage.PixelWidth} | H : {TargetImage.PixelHeight}");
+	public string TargetSize => (TargetImage is null ? $"W : {0} | H : {0}"
+									: $"W : {TargetImage.PixelWidth} | H : {TargetImage.PixelHeight}");
 
-    public string SourceSize => (SourceImage is null ? $"W : {0} | H : {0}"
-                                : $"W : {SourceWidth} | H : {SourceHeight}");
+	public string SourceSize => (SourceImage is null ? $"W : {0} | H : {0}"
+								: $"W : {SourceWidth} | H : {SourceHeight}");
 
-    partial void OnSourceImageChanged(BitmapImage? value)
-    {
-        if (value is null) return;
-        ImageNotLoaded = false;
-        TargetWidth = SourceWidth = (ushort)value.Width;
-        TargetHeight = SourceHeight = (ushort)value.Height;
+	partial void OnSourceImageChanged(BitmapImage? value)
+	{
+		if (value is null) return;
+		ImageNotLoaded = false;
+		TargetWidth = SourceWidth = (ushort)value.Width;
+		TargetHeight = SourceHeight = (ushort)value.Height;
 
-        _scriptEngine.ExecuteAction(new LoadBitmapCommand(value.ToGdiImage()));
-    }
+		_scriptEngine.ExecuteAction(new LoadBitmapCommand(value.ToGdiImage()));
 
-    partial void OnTargetWidthChanged(ushort value)
-    {
-        if (!KeepAspect)
-            return;
-        var aspectRatio = (float)SourceWidth / SourceHeight;
+	}
 
-        TargetHeight = (ushort)(TargetWidth / aspectRatio);
-    }
+	partial void OnTargetWidthChanged(ushort value)
+	{
+		if (!KeepAspect)
+			return;
+		var aspectRatio = (float)SourceWidth / SourceHeight;
 
-    partial void OnSelectedFilterChanged(KeyValuePair<string, IImageManipulator>? value)
-    {
-        List<ObservablePoint> values = new();
-        if (value is not null)
-        {
-            var method = value.Value.Value;
-            var kernelBasedResampler = method as Resampler;
-            var kernelBasedRadiusResampler = method as RadiusResampler;
-            if (kernelBasedResampler is null && kernelBasedRadiusResampler is null)
-                return;
+		TargetHeight = (ushort)(TargetWidth / aspectRatio);
+	}
 
-            var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(2) ?? kernelBasedResampler!.GetKernelMethodInfo();
+	partial void OnSelectedFilterChanged(IImageManipulator value)
+	{
+		UpdateKernelChart(value);
+	}
+	partial void OnRadiusChanged(float value)
+	{
+		UpdateKernelChart(SelectedFilter);
+	}
+
+	void UpdateKernelChart(IImageManipulator method)
+	{
+		List<ObservablePoint> values = new();
+
+		Radius = method.SupportsRadius ? Radius : 1;
+		var kernelBasedResampler = method as Resampler;
+		var kernelBasedRadiusResampler = method as RadiusResampler;
+		if (kernelBasedResampler is null && kernelBasedRadiusResampler is null)
+			return;
+
+		var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(Radius) ?? kernelBasedResampler!.GetKernelMethodInfo();
 
 
-            double minY = 0f;
-            for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.05f)
-            {
-                var y = Math.Round(info.Kernel(x), 3);
-                if (y < minY)
-                    minY = y;
-                values.Add(new(x, y));
+		double minY = 0f;
+		for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.05f)
+		{
+			var y = Math.Round(info.Kernel(x), 3);
+			if (y < minY)
+				minY = y;
+			values.Add(new(x, y));
 
-            }
+		}
 
-            YAxes[0].MinLimit = minY - 0.5f;
-        }
-        Series[0].Values = values;
-    }
-    [RelayCommand]
-    private async Task ProcessImage()
-    {
-        if (SourceImage is null) return;
+		YAxes[0].MinLimit = minY - 0.5f;
 
-        await Task.Run(() =>
-        {
-            float factor = 4;
-            bool applyToTarget = false;
+		Series[0].Values = values;
+	}
+	[RelayCommand]
+	private async Task ProcessImage()
+	{
+		if (SourceImage is null) return;
 
-            IImageManipulator method = SelectedFilter.Value.Value;
+		await Task.Run(() =>
+		{
+			bool applyToTarget = false;
 
-            bool useThresholds = true;
-            bool useCenteredGrid = false;
-            byte repetitionCount = 1;
-            const OutOfBoundsMode horizontalBph = OutOfBoundsMode.HalfSampleSymmetric;
-            const OutOfBoundsMode verticalBph = OutOfBoundsMode.HalfSampleSymmetric;
-            float radius = 1;
+			bool useThresholds = true;
+			byte repetitionCount = 1;
 
-            var command = new ResizeCommand(applyToTarget, method, TargetWidth, TargetHeight, 0, KeepAspect,
-                horizontalBph, verticalBph, repetitionCount, useThresholds, useCenteredGrid, radius);
+			var command = new ResizeCommand(applyToTarget, SelectedFilter, TargetWidth, TargetHeight, 0, KeepAspect,
+				BoundsMode, BoundsMode, repetitionCount, useThresholds, UseCentralGrid, Radius);
 
-            _scriptEngine.ExecuteAction(command);
-        });
-        TargetImage = _scriptEngine.GdiTarget.ToBitmapImage();
-        TargetWidth = (ushort)TargetImage.PixelWidth;
-        TargetHeight = (ushort)TargetImage.PixelHeight;
-    }
+			_scriptEngine.ExecuteAction(command);
+		});
+		TargetImage = _scriptEngine.GdiTarget.ToBitmapImage();
+		TargetWidth = (ushort)TargetImage.PixelWidth;
+		TargetHeight = (ushort)TargetImage.PixelHeight;
+	}
 
-    public void CalculateDimensions(bool maintainWidth = true)
-    {
-        if (!KeepAspect)
-            return;
-        var aspectRatio = (float)SourceWidth / SourceHeight;
+	public void CalculateDimensions(bool maintainWidth = true)
+	{
+		if (!KeepAspect)
+			return;
+		var aspectRatio = (float)SourceWidth / SourceHeight;
 
-        if (maintainWidth)
-            TargetHeight = (ushort)(TargetWidth / aspectRatio);
-        else
-            TargetWidth = (ushort)(TargetHeight * aspectRatio);
-    }
+		if (maintainWidth)
+			TargetHeight = (ushort)(TargetWidth / aspectRatio);
+		else
+			TargetWidth = (ushort)(TargetHeight * aspectRatio);
+	}
 
-    public MainWindowViewModel()
-    {
-        SelectedFilter = Filters.First();
-    }
+	
 
 }
