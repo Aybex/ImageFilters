@@ -14,7 +14,6 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
-using LiveChartsCore.SkiaSharpView.WPF;
 using SkiaSharp;
 
 namespace ImageFilters.GUI.ViewModels;
@@ -29,7 +28,7 @@ public partial class MainWindowViewModel : ObservableObject
 	[ObservableProperty] private bool _imageNotLoaded = true;
 	[ObservableProperty] private ushort _sourceWidth;
 	[ObservableProperty] private ushort _sourceHeight;
-	[ObservableProperty] private Dictionary<string, IImageManipulator> _filters = new(SupportedManipulators.MANIPULATORS) ;
+	[ObservableProperty] private Dictionary<string, IImageManipulator> _filters = new(SupportedManipulators.MANIPULATORS);
 
 	[ObservableProperty] private IImageManipulator _selectedFilter;
 
@@ -122,24 +121,20 @@ public partial class MainWindowViewModel : ObservableObject
 		Radius = method.SupportsRadius ? Radius : 1;
 		var kernelBasedResampler = method as Resampler;
 		var kernelBasedRadiusResampler = method as RadiusResampler;
-		if (kernelBasedResampler is null && kernelBasedRadiusResampler is null)
-			return;
-
-		var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(Radius) ?? kernelBasedResampler!.GetKernelMethodInfo();
-
-
 		double minY = 0f;
-		for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.05f)
+
+		if (kernelBasedResampler is not null || kernelBasedRadiusResampler is not null)
 		{
-			var y = Math.Round(info.Kernel(x), 3);
-			if (y < minY)
-				minY = y;
-			values.Add(new(x, y));
-
+			var info = kernelBasedRadiusResampler?.GetKernelMethodInfo(Radius) != null ? kernelBasedRadiusResampler.GetKernelMethodInfo(Radius) : kernelBasedResampler!.GetKernelMethodInfo();
+			for (var x = -info.KernelRadius; x <= info.KernelRadius; x += 0.05f)
+			{
+				var y = Math.Round(info.Kernel(x), 3);
+				if (y < minY)
+					minY = y;
+				values.Add(new(x, y));
+			}
 		}
-
 		YAxes[0].MinLimit = minY - 0.5f;
-
 		Series[0].Values = values;
 	}
 	[RelayCommand]
@@ -176,6 +171,6 @@ public partial class MainWindowViewModel : ObservableObject
 			TargetWidth = (ushort)(TargetHeight * aspectRatio);
 	}
 
-	
+
 
 }
