@@ -18,7 +18,7 @@ using SkiaSharp;
 
 namespace ImageFilters.GUI.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class HomePageViewModel : ObservableObject
 {
 	//Fields
 	private readonly ScriptEngine _scriptEngine = new();
@@ -31,7 +31,6 @@ public partial class MainWindowViewModel : ObservableObject
 	[ObservableProperty] private Dictionary<string, IImageManipulator> _filters = new(SupportedManipulators.MANIPULATORS);
 
 	[ObservableProperty] private IImageManipulator _selectedFilter;
-
 	[NotifyPropertyChangedFor(nameof(TargetSize))]
 	[ObservableProperty] private BitmapImage? _targetImage;
 	[ObservableProperty] private ushort _targetWidth;

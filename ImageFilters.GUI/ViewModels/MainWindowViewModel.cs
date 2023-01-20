@@ -9,7 +9,7 @@ using ImageFilters.Core.Imager.Interface;
 
 namespace ImageFilters.GUI.ViewModels;
 
-public partial class HomePageViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject
 {
 	//Fields
 

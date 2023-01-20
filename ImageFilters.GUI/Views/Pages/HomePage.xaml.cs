@@ -2,6 +2,7 @@
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Controls;
+using ImageFilters.GUI.Helpers;
 
 namespace ImageFilters.GUI.Views.Pages;
 
