@@ -1,23 +1,67 @@
-﻿using ImageFilters.GUI.ViewModels;
-using System.Windows.Media.Imaging;
-using System.Windows;
-using ImageFilters.GUI.Helpers;
-using Wpf.Ui.Appearance;
-using Wpf.Ui.Controls.Window;
+﻿using Wpf.Ui.Controls.Navigation;
 
 namespace ImageFilters.GUI.Views;
 
-public partial class MainWindow
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : INavigationWindow
 {
+	public ViewModels.MainWindowViewModel ViewModel
+	{
+		get;
+	}
 
-    private MainWindowViewModel ViewModel { get; }
-    public MainWindow()
-    {
-        DataContext = ViewModel= new MainWindowViewModel();
-        
-        Watcher.Watch(this,WindowBackdropType.Acrylic);
+	public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
+	{
+		ViewModel = viewModel;
+		DataContext = this;
 
-        InitializeComponent();
-    }
-    
+		Wpf.Ui.Appearance.Watcher.Watch(this);
+
+		InitializeComponent();
+		SetPageService(pageService);
+
+		navigationService.SetNavigationControl(RootNavigation);
+	}
+
+	#region INavigationWindow methods
+
+	public INavigationView GetNavigation()
+		=> RootNavigation;
+
+	public bool Navigate(Type pageType)
+		=> RootNavigation.Navigate(pageType);
+
+	public void SetPageService(IPageService pageService)
+		=> RootNavigation.SetPageService(pageService);
+
+	public void ShowWindow()
+		=> Show();
+
+	public void CloseWindow()
+		=> Close();
+
+	#endregion INavigationWindow methods
+
+	/// <summary>
+	/// Raises the closed event.
+	/// </summary>
+	protected override void OnClosed(EventArgs e)
+	{
+		base.OnClosed(e);
+
+		// Make sure that closing this window will begin the process of closing the application.
+		Application.Current.Shutdown();
+	}
+
+	INavigationView INavigationWindow.GetNavigation()
+	{
+		throw new NotImplementedException();
+	}
+
+	public void SetServiceProvider(IServiceProvider serviceProvider)
+	{
+		throw new NotImplementedException();
+	}
 }

@@ -17,7 +17,8 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       d:DataContext="{d:DesignInstance Type={x:Type vm:HomePageViewModel}}"
-      mc:Ignorable="d">
+      mc:Ignorable="d"
+      >
 	<Page.Resources>
 		<helpers:BoolInverter x:Key="BoolInverter"/>
 		<helpers:BoolToVisibilityInversed x:Key="BoolToVis" />
@@ -28,7 +29,7 @@
 		<SolidColorBrush x:Key="AccentColor" Color="#2f7847 "></SolidColorBrush>
 	</Page.Resources>
 	
-		<Grid Grid.Row="1" Background="#13FFFFFF">
+		<Grid Grid.Row="1" ScrollViewer.CanContentScroll="True" >
 
 			<VirtualizingStackPanel
 		x:Name="RootPanel"

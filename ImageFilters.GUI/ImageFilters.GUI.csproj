@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.700" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     <PackageReference Include="WPF-UI" Version="3.0.0-preview.1" />
   </ItemGroup>
 
@@ -35,6 +36,15 @@
     <Resource Include="Assets\Icon-256.png" />
     <Resource Include="Assets\Icon-512.png" />
     <Resource Include="Assets\placeholder.png" />
+  </ItemGroup>
+
+    <!--Implicit usings-->
+  <ItemGroup>
+    <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
+    <Using Include="CommunityToolkit.Mvvm.Input" />
+    <Using Include="System.Windows" />
+    <Using Include="Wpf.Ui.Contracts" />
+    <Using Include="Wpf.Ui.Services" />
   </ItemGroup>
 
 </Project>
