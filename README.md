@@ -6,6 +6,7 @@ The goal is more like getting each possible available rescaling algorithm into t
 This project is based on the work of [Hawkynt](https://github.com/Hawkynt), initial project available [here](https://github.com/Hawkynt/2dimagefilter).
 
 The project was optimized, modernized, ported to .NET 7 and split into 3 different C# Projects : Library of all filters and upscalers, UI and CLI.
+A new GUI was made in WPF in modern fluent windows 11 style using WIN-UI Library
 
   Running all **129 Filters** on a 128x128 image, on a 4x Upscale when it's available gives **-60%**  of time reduction and **-82%** of memory gain.
 | Method | Mean | Error | StdDev | Median | Allocated |
