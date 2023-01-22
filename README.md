@@ -14,6 +14,8 @@ A new GUI was made in WPF in modern fluent windows 11 style using WIN-UI Library
 |Original with .NET Framework 4.6|1608 ms|42 ms|104 ms|1607 ms|3359 MB|
 |This project with .NET 7|646 ms|9 ms|15 ms|646 ms|621 MB| 
 
+<img src="https://user-images.githubusercontent.com/8873170/213897795-b5775446-89fc-474f-b793-1b1e99650f12.png" width="512">
+
 ## Prerequisites
 
  - [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.1-windows-x64-installer)
