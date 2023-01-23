@@ -8,7 +8,7 @@ namespace ImageFilters.GUI.Views.Pages;
 
 public partial class HomePage : Page
 {
-	private HomePageViewModel ViewModel { get; }
+	private HomePageViewModel ViewModel { get; set; }
 
 	public HomePage()
 	{
@@ -43,4 +43,11 @@ public partial class HomePage : Page
 
 	}
 
+	private void Button_Click(object sender, RoutedEventArgs e)
+	{
+		InitializeComponent();
+
+		DataContext = ViewModel = new HomePageViewModel();
+		GC.Collect();
+	}
 }

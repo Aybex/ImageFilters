@@ -17,7 +17,7 @@
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       d:DataContext="{d:DesignInstance Type={x:Type vm:HomePageViewModel}}"
-      mc:Ignorable="d"
+      mc:Ignorable="d" ScrollViewer.CanContentScroll="True"
       >
 	<Page.Resources>
 		<helpers:BoolInverter x:Key="BoolInverter"/>
@@ -29,13 +29,16 @@
 		<SolidColorBrush x:Key="AccentColor" Color="#2f7847 "></SolidColorBrush>
 	</Page.Resources>
 	
-		<Grid Grid.Row="1" ScrollViewer.CanContentScroll="True" >
+		<Grid Grid.Row="1" >
+			<ScrollViewer VerticalScrollBarVisibility="Visible" >
 
 			<VirtualizingStackPanel
 		x:Name="RootPanel"
 		Margin="20"
 		VirtualizingPanel.IsVirtualizing="True"
-		VirtualizingPanel.VirtualizationMode="Recycling">
+		VirtualizingPanel.VirtualizationMode="Recycling" 
+		
+		>
 
 				<Border>
 					<Grid x:Name="SourceGeid">
@@ -101,7 +104,7 @@
 								<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
 								<ui:Button Grid.Row="1" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
 								<ui:Button Grid.Row="2" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
-								<ui:Button Grid.Row="3" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+								<ui:Button Grid.Row="3" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
 							</Grid>
 						</Border>
 					</Grid>
@@ -205,10 +208,18 @@
 						<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
 					</ui:CardControl>
 					<Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" CornerRadius="5" Background="#11FFFFFF">
+						<StackPanel>
+
+						<TextBlock
+							FontSize="14"
+							FontWeight="Medium"
+							Text="Kernal function" Margin="5"/>
 						<lvc:CartesianChart 
 								Series="{Binding Series}"
 								XAxes="{Binding XAxes}"
-								YAxes="{Binding YAxes}"/>
+								YAxes="{Binding YAxes}" VerticalAlignment="Bottom"
+								Height="120"/>
+						</StackPanel>
 					</Border>
 					<ui:CardControl Grid.Row="3" Grid.Column="1" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"   Icon="SlideSize20" Height="70" Margin="5">
 						<ui:CardControl.Header>
@@ -242,6 +253,6 @@
 					</ui:CardControl>
 				</Grid>
 			</VirtualizingStackPanel>
-
+</ScrollViewer>
 		</Grid>
 </Page>
