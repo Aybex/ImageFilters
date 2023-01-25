@@ -26,18 +26,19 @@
 
 		<CornerRadius x:Key="ImgCorner" TopLeft="5" BottomLeft="5" BottomRight="5" TopRight="5"/>
 		<system:String x:Key="DefaultSize">W : 0 | H : 0</system:String>
-		<SolidColorBrush x:Key="AccentColor" Color="#2f7847 "></SolidColorBrush>
+		<SolidColorBrush x:Key="AccentColor" Color="{DynamicResource SystemAccentColor}"/>
+		<!--
+		<SolidColorBrush x:Key="AccentColor" Color="#2f7847 "></SolidColorBrush> -->
 	</Page.Resources>
-	
-		<Grid Grid.Row="1" >
-			<ScrollViewer VerticalScrollBarVisibility="Visible" >
+
+	<Grid Grid.Row="1" >
+		<ScrollViewer VerticalScrollBarVisibility="Visible" >
 
 			<VirtualizingStackPanel
 		x:Name="RootPanel"
 		Margin="20"
 		VirtualizingPanel.IsVirtualizing="True"
-		VirtualizingPanel.VirtualizationMode="Recycling" 
-		
+		VirtualizingPanel.VirtualizationMode="Recycling"
 		>
 
 				<Border>
@@ -48,9 +49,9 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
 
-						<Border Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
+						<ui:Card Margin="5,0" Background="#11FFFFFF" Padding="0">
 							<StackPanel >
-								<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="{StaticResource AccentColor}">
+								<Border Height="40" CornerRadius="3.5,3.5,0,0" Margin="0,0,0,5" Background="{DynamicResource ControlFillColorSecondaryBrush}">
 									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Source Image"/></TextBlock>
 								</Border>
 
@@ -66,10 +67,10 @@
 								</WrapPanel>
 								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding SourceSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
 							</StackPanel>
-						</Border>
-						<Border Grid.Column="1" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
+						</ui:Card>
+						<ui:Card Grid.Column="1" Margin="5,0" Padding="0" Background="#11FFFFFF">
 							<StackPanel >
-								<Border Height="40" CornerRadius="5,5,0,0" Margin="0,0,0,5" Background="{StaticResource AccentColor}">
+								<Border Height="40" CornerRadius="3.5,3.5,0,0" Margin="0,0,0,5" Background="{DynamicResource ControlFillColorSecondaryBrush}">
 									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Target Image"/></TextBlock>
 								</Border>
 
@@ -87,7 +88,7 @@
 
 								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding TargetSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
 							</StackPanel>
-						</Border>
+						</ui:Card>
 
 
 
@@ -101,10 +102,10 @@
 									<RowDefinition Height="1*"/>
 								</Grid.RowDefinitions>
 
-								<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
-								<ui:Button Grid.Row="1" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
-								<ui:Button Grid.Row="2" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
-								<ui:Button Grid.Row="3" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
+								<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage"   Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
+								<ui:Button Appearance="Primary" Grid.Row="3" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+								<ui:Button Grid.Row="1" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
+								<ui:Button Grid.Row="2" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
 							</Grid>
 						</Border>
 					</Grid>
@@ -124,7 +125,8 @@
 					</Grid.ColumnDefinitions>
 
 
-					<ui:CardControl Grid.ColumnSpan="2" Margin="5" Icon="Whiteboard24" VerticalAlignment="Top" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0" >
+					<ui:CardControl Grid.ColumnSpan="2" Margin="5" Icon="Whiteboard24" VerticalAlignment="Top" 
+					Template="{DynamicResource AccentCard}">
 						<ui:CardControl.Header>
 							<StackPanel Grid.Column="0" VerticalAlignment="Center">
 								<TextBlock
@@ -140,7 +142,8 @@
 						<ComboBox SelectedValue="{Binding SelectedFilter, Mode=TwoWay}" ItemsSource="{Binding Filters, Mode=OneWay}" SelectedValuePath="Value" DisplayMemberPath="Key"
 						          x:Name="Filters"  Height="56" Width="290" SelectedIndex="0"/>
 					</ui:CardControl>
-					<ui:CardControl Grid.Row="1" Grid.Column="0" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"   Icon="ArrowAutofitWidth20" VerticalAlignment="Top" Height="70" Margin="5" IsEnabled="{Binding SelectedFilter.SupportsWidth}">
+					<ui:CardControl Grid.Row="1" Grid.Column="0" Template="{DynamicResource AccentCard}"
+					Icon="ArrowAutofitWidth20" VerticalAlignment="Top" Height="70" Margin="5" IsEnabled="{Binding SelectedFilter.SupportsWidth}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -159,8 +162,7 @@
 						</WrapPanel>
 					</ui:CardControl>
 
-					<ui:CardControl Grid.Row="1" Grid.Column="1" BorderBrush="{StaticResource AccentColor}" BorderThickness="4 0 0 0" 
-						                Height="70" Margin="5"    IsEnabled="{Binding SelectedFilter.SupportsHeight}" Icon="ArrowAutofitHeight20" >
+					<ui:CardControl Grid.Row="1" Grid.Column="1" Template="{DynamicResource AccentCard}" Height="70" Margin="5"    IsEnabled="{Binding SelectedFilter.SupportsHeight}" Icon="ArrowAutofitHeight20" >
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -177,7 +179,7 @@
 							<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
 						</WrapPanel>
 					</ui:CardControl>
-					<ui:CardControl Grid.Row="2" Grid.Column="0" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"   Icon="SlideSize20" Height="70" Margin="5">
+					<ui:CardControl Grid.Row="2" Grid.Column="0" Template="{DynamicResource AccentCard}" Icon="SlideSize20" Height="70" Margin="5">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -193,7 +195,7 @@
 					</ui:CardControl>
 
 
-					<ui:CardControl Grid.Row="2" Grid.Column="1" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"  Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.ChangesResolution}">
+					<ui:CardControl Grid.Row="2" Grid.Column="1" Template="{DynamicResource AccentCard}" Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.ChangesResolution}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -210,18 +212,18 @@
 					<Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" CornerRadius="5" Background="#11FFFFFF">
 						<StackPanel>
 
-						<TextBlock
+							<TextBlock
 							FontSize="14"
 							FontWeight="Medium"
 							Text="Kernal function" Margin="5"/>
-						<lvc:CartesianChart 
+							<lvc:CartesianChart 
 								Series="{Binding Series}"
 								XAxes="{Binding XAxes}"
 								YAxes="{Binding YAxes}" VerticalAlignment="Bottom"
 								Height="120"/>
 						</StackPanel>
 					</Border>
-					<ui:CardControl Grid.Row="3" Grid.Column="1" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"   Icon="SlideSize20" Height="70" Margin="5">
+					<ui:CardControl Grid.Row="3" Grid.Column="1" Template="{DynamicResource AccentCard}" Icon="GridDots24" Height="70" Margin="5">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -230,14 +232,14 @@
 									Text="Use central grid" />
 								<TextBlock
 									FontSize="12"
-									Text="Keep original image's aspect ratio" />
+									Text="Use a central grid" />
 							</StackPanel>
 						</ui:CardControl.Header>
 						<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
 					</ui:CardControl>
 
 
-					<ui:CardControl Grid.Row="4" Grid.Column="1" BorderBrush="{StaticResource AccentColor}" BorderThickness="4,0,0,0"   Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.SupportsRadius}">
+					<ui:CardControl Grid.Row="4" Grid.Column="1" Template="{DynamicResource AccentCard}"  Icon="RadioButton24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.SupportsRadius}">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 								<TextBlock
@@ -253,6 +255,6 @@
 					</ui:CardControl>
 				</Grid>
 			</VirtualizingStackPanel>
-</ScrollViewer>
-		</Grid>
+		</ScrollViewer>
+	</Grid>
 </Page>
