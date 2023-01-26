@@ -26,230 +26,233 @@
 
 		<CornerRadius x:Key="ImgCorner" TopLeft="5" BottomLeft="5" BottomRight="5" TopRight="5"/>
 		<system:String x:Key="DefaultSize">W : 0 | H : 0</system:String>
-		<SolidColorBrush x:Key="AccentColor" Color="{DynamicResource SystemAccentColor}"/>
-		<!--
-		<SolidColorBrush x:Key="AccentColor" Color="#2f7847 "></SolidColorBrush> -->
 	</Page.Resources>
 
-	<Grid Grid.Row="1" >
-		<ScrollViewer VerticalScrollBarVisibility="Visible" >
+	<ScrollViewer Padding="10" VerticalScrollBarVisibility="Visible" >
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="200"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
 
-			<VirtualizingStackPanel
-		x:Name="RootPanel"
-		Margin="20"
-		VirtualizingPanel.IsVirtualizing="True"
-		VirtualizingPanel.VirtualizationMode="Recycling"
-		>
+			<!--Header-->
+			<Grid Grid.Row="0" VerticalAlignment="Center" Margin="0,0,0,5">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
 
-				<Border>
-					<Grid x:Name="SourceGeid">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="1*"/>
-							<ColumnDefinition Width="1*"/>
-							<ColumnDefinition/>
-						</Grid.ColumnDefinitions>
+				<!--Source Image-->
+				<ui:Card Grid.Column="0" Padding="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+					<StackPanel>
+						<Label Margin="5" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Source Image" Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+						<WrapPanel x:Name="SourceImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<WrapPanel.OpacityMask>
+								<VisualBrush >
+									<VisualBrush.Visual>
+										<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
+									</VisualBrush.Visual>
+								</VisualBrush>
+							</WrapPanel.OpacityMask>
+							<Image Source="{Binding SourceImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						</WrapPanel>
+						<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding SourceSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
+					</StackPanel>
+				</ui:Card>
 
-						<ui:Card Margin="5,0" Background="#11FFFFFF" Padding="0">
-							<StackPanel >
-								<Border Height="40" CornerRadius="3.5,3.5,0,0" Margin="0,0,0,5" Background="{DynamicResource ControlFillColorSecondaryBrush}">
-									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Source Image"/></TextBlock>
-								</Border>
+				<!--Target Image-->
+				<ui:Card Grid.Column="2" Padding="0" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+					<StackPanel>
+						<Label Margin="5" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Target Image" Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+						<WrapPanel x:Name="TargetImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+							<WrapPanel.OpacityMask>
+								<VisualBrush >
+									<VisualBrush.Visual>
+										<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
+									</VisualBrush.Visual>
+								</VisualBrush>
+							</WrapPanel.OpacityMask>
+							<Image Source="{Binding TargetImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+						</WrapPanel>
+						<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding TargetSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
+					</StackPanel>
+				</ui:Card>
 
-								<WrapPanel x:Name="SourceImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<WrapPanel.OpacityMask>
-										<VisualBrush >
-											<VisualBrush.Visual>
-												<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
-											</VisualBrush.Visual>
-										</VisualBrush>
-									</WrapPanel.OpacityMask>
-									<Image Source="{Binding SourceImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-								</WrapPanel>
-								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding SourceSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
-							</StackPanel>
-						</ui:Card>
-						<ui:Card Grid.Column="1" Margin="5,0" Padding="0" Background="#11FFFFFF">
-							<StackPanel >
-								<Border Height="40" CornerRadius="3.5,3.5,0,0" Margin="0,0,0,5" Background="{DynamicResource ControlFillColorSecondaryBrush}">
-									<TextBlock  FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" TextAlignment="Center"><Run Text="Target Image"/></TextBlock>
-								</Border>
+				<!--Buttons-->
+				<ui:Card Grid.Column="4" Padding="5" VerticalAlignment="Stretch">
+					<StackPanel Orientation="Vertical">
+						<ui:Button Template="{DynamicResource ButtonIcon}" Margin="3" Icon="FolderOpen20" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
+						<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
+						<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
+						<ui:Button  Template="{DynamicResource ButtonIcon}" Appearance="Primary"  Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+					</StackPanel>
+				</ui:Card>
+			</Grid>
 
-								<WrapPanel x:Name="TargetImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-									<WrapPanel.OpacityMask>
-										<VisualBrush >
-											<VisualBrush.Visual>
-												<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
-											</VisualBrush.Visual>
-										</VisualBrush>
-									</WrapPanel.OpacityMask>
-									<Image Source="{Binding TargetImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-								</WrapPanel>
-
-
-								<TextBlock Margin="0,0,0,5" TextAlignment="Center" Text="{Binding TargetSize, FallbackValue={StaticResource DefaultSize}, TargetNullValue={StaticResource DefaultSize}}"/>
-							</StackPanel>
-						</ui:Card>
-
-
-
-
-						<ui:Card Grid.Column="2" Margin="5,0" Padding="5 10" >
-							<StackPanel Orientation="Vertical">
-
-								<ui:Button Template="{DynamicResource ButtonIcon}" Margin="3" Icon="FolderOpen20" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
-								<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
-								<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
-								<ui:Button  Template="{DynamicResource ButtonIcon}" Appearance="Primary"  Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
-							</StackPanel>
-						</ui:Card>
-					</Grid>
-				</Border>
-
-				<Grid Height="400">
-					<Grid.RowDefinitions>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-					</Grid.ColumnDefinitions>
+			<Grid Grid.Row="1" Height="510" VerticalAlignment="Top">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="1*"/>
+				</Grid.ColumnDefinitions>
 
 
-					<ui:CardControl Grid.ColumnSpan="2" Margin="5" Icon="Whiteboard24" VerticalAlignment="Top" 
-					Template="{DynamicResource AccentCard}">
-						<ui:CardControl.Header>
-							<StackPanel Grid.Column="0" VerticalAlignment="Center">
-								<TextBlock
+				<ui:CardControl Grid.ColumnSpan="3" Icon="Whiteboard24" VerticalAlignment="Top" 
+					Template="{DynamicResource AccentCard}" Margin="0,0,0,5">
+					<ui:CardControl.Header>
+						<StackPanel Grid.Column="0" VerticalAlignment="Center">
+							<TextBlock
 									FontSize="13"
 									FontWeight="Medium"
 									Text="Filter" />
-								<TextBlock
+							<TextBlock
 									FontSize="12"
 									Text="Choose the Filter to be applied to the source Image." />
-							</StackPanel>
-						</ui:CardControl.Header>
+						</StackPanel>
+					</ui:CardControl.Header>
 
-						<ComboBox SelectedValue="{Binding SelectedFilter, Mode=TwoWay}" ItemsSource="{Binding Filters, Mode=OneWay}" SelectedValuePath="Value" DisplayMemberPath="Key"
-						          x:Name="Filters"  Height="56" Width="290" SelectedIndex="0"/>
-					</ui:CardControl>
-					<ui:CardControl Grid.Row="1" Grid.Column="0" Template="{DynamicResource AccentCard}"
-					Icon="ArrowAutofitWidth20" VerticalAlignment="Top" Height="70" Margin="5" IsEnabled="{Binding SelectedFilter.SupportsWidth}">
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
-						FontSize="14"
-						FontWeight="Medium"
-						Text="Width" />
-								<TextBlock
-						FontSize="12"
-						Text="Target width of the result image" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<WrapPanel>
-							<ui:NumberBox Value="{Binding TargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-							              Minimum="0" MaxDecimalPlaces="0"  PlaceholderText="1920" SpinButtonPlacementMode="Hidden"  Width="100"/>
-							<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
-						</WrapPanel>
-					</ui:CardControl>
+					<ComboBox SelectedValue="{Binding SelectedFilter, Mode=TwoWay}" ItemsSource="{Binding Filters, Mode=OneWay}" SelectedValuePath="Value" DisplayMemberPath="Key" x:Name="Filters"  Height="56" Width="290" SelectedIndex="0"/>
+				</ui:CardControl>
+				<ui:CardControl Grid.Row="1" Grid.Column="0" Template="{DynamicResource AccentCard}"
+					Icon="ArrowAutofitWidth20" VerticalAlignment="Stretch" Margin="0,0,0,5" IsEnabled="{Binding SelectedFilter.SupportsWidth}">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock FontSize="14" FontWeight="Medium" Text="Width" />
+							<TextBlock FontSize="12" Text="Target width of the result image" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<WrapPanel>
+						<ui:NumberBox Value="{Binding TargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" MaxDecimalPlaces="0"  PlaceholderText="1920" SpinButtonPlacementMode="Hidden"  Width="100"/>
+						<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
+					</WrapPanel>
+				</ui:CardControl>
 
-					<ui:CardControl Grid.Row="1" Grid.Column="1" Template="{DynamicResource AccentCard}" Height="70" Margin="5"    IsEnabled="{Binding SelectedFilter.SupportsHeight}" Icon="ArrowAutofitHeight20" >
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
-							FontSize="14"
-							FontWeight="Medium"
-							Text="Height" />
-								<TextBlock
-							FontSize="12"
-							Text="Target height of the result image" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<WrapPanel Visibility="{Binding KeepAspect, Converter={StaticResource BoolToVis}}">
-							<ui:NumberBox Minimum="0" MaxDecimalPlaces="0" Value="{Binding TargetHeight, Mode=TwoWay}" PlaceholderText="1920" SpinButtonPlacementMode="Hidden" Width="100"/>
-							<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
-						</WrapPanel>
-					</ui:CardControl>
-					<ui:CardControl Grid.Row="2" Grid.Column="0" Template="{DynamicResource AccentCard}" Icon="SlideSize20" Height="70" Margin="5">
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
-							FontSize="14"
-							FontWeight="Medium"
-							Text="Maintain Aspect" />
-								<TextBlock
-							FontSize="12"
-							Text="Keep original image's aspect ratio" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<ui:ToggleSwitch IsChecked="{Binding KeepAspect, Mode=TwoWay}"/>
-					</ui:CardControl>
-
-
-					<ui:CardControl Grid.Row="2" Grid.Column="1" Template="{DynamicResource AccentCard}" Icon="BorderLeftRight24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.ChangesResolution}">
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
-							FontSize="14"
-							FontWeight="Medium"
-							Text="Border Behaviour" />
-								<TextBlock
-							FontSize="12"
-							Text="Border extrapolation" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
-					</ui:CardControl>
-					
-					<ui:Card Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" Padding="0">
-						<StackPanel>
-
+				<!--Target Height-->
+				<ui:CardControl Grid.Row="1" Grid.Column="2" Template="{DynamicResource AccentCard}" Margin="0,0,0,5"    IsEnabled="{Binding SelectedFilter.SupportsHeight}" Icon="ArrowAutofitHeight20" VerticalAlignment="Stretch" >
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 							<TextBlock
 							FontSize="14"
 							FontWeight="Medium"
-							Text="Kernal function" Margin="5"/>
-							<lvc:CartesianChart 
+							Text="Height" />
+							<TextBlock
+							FontSize="12"
+							Text="Target height of the result image" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<WrapPanel Visibility="{Binding KeepAspect, Converter={StaticResource BoolToVis}}">
+						<ui:NumberBox Minimum="0" MaxDecimalPlaces="0" Value="{Binding TargetHeight, Mode=TwoWay}" PlaceholderText="1920" SpinButtonPlacementMode="Hidden" Width="100"/>
+						<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
+					</WrapPanel>
+				</ui:CardControl>
+				<ui:CardControl Grid.Row="2" Grid.Column="0" Template="{DynamicResource AccentCard}" Icon="SlideSize20" VerticalAlignment="Stretch" Margin="0,0,0,5">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock
+							FontSize="14"
+							FontWeight="Medium"
+							Text="Maintain Aspect" />
+							<TextBlock
+							FontSize="12"
+							Text="Keep original image's aspect ratio" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<ui:ToggleSwitch IsChecked="{Binding KeepAspect, Mode=TwoWay}"/>
+				</ui:CardControl>
+
+				<!--Border behaviour-->
+				<ui:CardControl Grid.Row="2" Grid.Column="2" Template="{DynamicResource AccentCard}" Icon="BorderLeftRight24" IsEnabled="{Binding SelectedFilter.ChangesResolution}" VerticalAlignment="Stretch" Margin="0,0,0,5">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock
+							FontSize="14"
+							FontWeight="Medium"
+							Text="Border Behaviour" />
+							<TextBlock
+							FontSize="12"
+							Text="Border extrapolation" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
+				</ui:CardControl>
+				<Label  Grid.Row="3" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" VerticalAlignment="Bottom" Content="Advanced"/>
+				<!--Kernel function chart-->
+				<ui:Card Grid.Column="0" Grid.Row="4" Grid.RowSpan="3" Padding="0" Margin="0,0,0,5" VerticalAlignment="Stretch" VerticalContentAlignment="Top">
+					<StackPanel>
+
+						<TextBlock
+							FontSize="14"
+							FontWeight="Medium"
+							Text="Kernal function" Margin="10,8,0,15"/>
+						<lvc:CartesianChart 
 								Series="{Binding Series}"
 								XAxes="{Binding XAxes}"
 								YAxes="{Binding YAxes}" VerticalAlignment="Bottom"
-								Height="120"/>
-						</StackPanel>
-					</ui:Card>
-					<ui:CardControl Grid.Row="3" Grid.Column="1" Template="{DynamicResource AccentCard}" Icon="GridDots24" Height="70" Margin="5">
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
+								Height="180"/>
+					</StackPanel>
+				</ui:Card>
+
+				<!--Central Grid-->
+				<ui:CardControl Grid.Row="4" Grid.Column="2" Template="{DynamicResource AccentCard}" Icon="GridDots24" Margin="0,0,0,5" VerticalAlignment="Stretch">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock
 									FontSize="14"
 									FontWeight="Medium"
 									Text="Use central grid" />
-								<TextBlock
+							<TextBlock
 									FontSize="12"
 									Text="Use a central grid" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
-					</ui:CardControl>
+						</StackPanel>
+					</ui:CardControl.Header>
+					<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
+				</ui:CardControl>
 
-
-					<ui:CardControl Grid.Row="4" Grid.Column="1" Template="{DynamicResource AccentCard}"  Icon="RadioButton24" Height="70"  Margin="5" IsEnabled="{Binding SelectedFilter.SupportsRadius}">
-						<ui:CardControl.Header>
-							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-								<TextBlock
+				<!--Kernel radius-->
+				<ui:CardControl Grid.Row="5" Grid.Column="2" Template="{DynamicResource AccentCard}"  Icon="RadioButton24" IsEnabled="{Binding SelectedFilter.SupportsRadius}" Margin="0,0,0,5" VerticalAlignment="Stretch">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock
 									FontSize="14"
 									FontWeight="Medium"
 									Text="Kernel Radius" />
-								<TextBlock
+							<TextBlock
 									FontSize="12"
-									Text="Border extrapolation" />
-							</StackPanel>
-						</ui:CardControl.Header>
-						<ui:NumberBox Value="{Binding Radius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" />
-					</ui:CardControl>
-				</Grid>
-			</VirtualizingStackPanel>
-		</ScrollViewer>
-	</Grid>
+									Text="Radius value for kernel based upscaler" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<ui:NumberBox Value="{Binding Radius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" />
+				</ui:CardControl>
+
+				<!--Use thresholds-->
+				<ui:CardControl Grid.Row="6" Grid.Column="2" Template="{DynamicResource AccentCard}" Icon="GridDots24" Margin="0,0,0,5" VerticalAlignment="Stretch">
+					<ui:CardControl.Header>
+						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
+							<TextBlock
+									FontSize="14"
+									FontWeight="Medium"
+									Text="Use threshholds" />
+							<TextBlock
+									FontSize="12"
+									Text="Use threshholds" />
+						</StackPanel>
+					</ui:CardControl.Header>
+					<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
+				</ui:CardControl>
+
+			</Grid>
+		</Grid>
+	</ScrollViewer>
 </Page>

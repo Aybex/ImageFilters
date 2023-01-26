@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                     >
+
+	<SolidColorBrush x:Key="AccentBrush" Color="#2f7847 "></SolidColorBrush>
 	<ControlTemplate x:Key="AccentCard" TargetType="ui:CardControl">
 		<Grid
 			Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
