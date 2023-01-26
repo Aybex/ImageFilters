@@ -13,4 +13,17 @@
 			<ui:CardControl  Grid.Column="0" Grid.ColumnSpan="2" Content="{TemplateBinding Content}" Header="{TemplateBinding Header}" Icon="{TemplateBinding Icon}"  VerticalAlignment="Stretch" />
 		</Grid>
 	</ControlTemplate>
+
+	<ControlTemplate x:Key="ButtonIcon" TargetType="ui:Button">
+		<ui:Button Appearance="{TemplateBinding Appearance}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Padding="0">
+			<Grid Width="{TemplateBinding Width}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="30"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<ui:SymbolIcon Grid.Column="0" Symbol="{TemplateBinding Icon}" />
+				<TextBlock Text="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="Center" />
+			</Grid>
+		</ui:Button>
+	</ControlTemplate>
 </ResourceDictionary>

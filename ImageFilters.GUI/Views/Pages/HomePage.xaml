@@ -93,21 +93,15 @@
 
 
 
-						<Border Grid.Column="2" Margin="5,0" CornerRadius="{DynamicResource ImgCorner}" Background="#11FFFFFF">
-							<Grid>
-								<Grid.RowDefinitions>
-									<RowDefinition Height="1*"/>
-									<RowDefinition Height="1*"/>
-									<RowDefinition Height="1*"/>
-									<RowDefinition Height="1*"/>
-								</Grid.RowDefinitions>
+						<ui:Card Grid.Column="2" Margin="5,0" Padding="5 10" >
+							<StackPanel Orientation="Vertical">
 
-								<ui:Button Grid.Row="0" Margin="3" Icon="FolderOpen20" x:Name="LoadImage"   Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
-								<ui:Button Appearance="Primary" Grid.Row="3" Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
-								<ui:Button Grid.Row="1" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
-								<ui:Button Grid.Row="2" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
-							</Grid>
-						</Border>
+								<ui:Button Template="{DynamicResource ButtonIcon}" Margin="3" Icon="FolderOpen20" Content="Load Image" Height="38" HorizontalAlignment="Stretch" Click="LoadImage_Click"/>
+								<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="ArrowReset20" Content="Reset" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}" Click="Button_Click"/>
+								<ui:Button  Template="{DynamicResource ButtonIcon}" Margin="3" Icon="SaveImage20" x:Name="SaveImage" Content="Save Image" Height="38" HorizontalAlignment="Stretch" Click="SaveImage_Click"/>
+								<ui:Button  Template="{DynamicResource ButtonIcon}" Appearance="Primary"  Margin="3" Icon="ResizeImage20" x:Name="ProcessImage" Content="Process Image" Height="38"  HorizontalAlignment="Stretch"  Command="{Binding ProcessImageCommand}"/>
+							</StackPanel>
+						</ui:Card>
 					</Grid>
 				</Border>
 
@@ -209,7 +203,8 @@
 						</ui:CardControl.Header>
 						<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
 					</ui:CardControl>
-					<Border Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" CornerRadius="5" Background="#11FFFFFF">
+					
+					<ui:Card Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="5" Padding="0">
 						<StackPanel>
 
 							<TextBlock
@@ -222,7 +217,7 @@
 								YAxes="{Binding YAxes}" VerticalAlignment="Bottom"
 								Height="120"/>
 						</StackPanel>
-					</Border>
+					</ui:Card>
 					<ui:CardControl Grid.Row="3" Grid.Column="1" Template="{DynamicResource AccentCard}" Icon="GridDots24" Height="70" Margin="5">
 						<ui:CardControl.Header>
 							<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
