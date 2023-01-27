@@ -37,6 +37,7 @@ public partial class HomePageViewModel : ObservableObject
 	[ObservableProperty] private ushort _targetHeight;
 	[ObservableProperty] private bool _keepAspect;
 	[ObservableProperty] private bool _useCentralGrid;
+	[ObservableProperty] private bool _useTreshholds;
 
 	[NotifyPropertyChangedFor(nameof(SelectedFilter))]
 	[ObservableProperty] private float _radius = 1;
@@ -144,12 +145,10 @@ public partial class HomePageViewModel : ObservableObject
 		await Task.Run(() =>
 		{
 			bool applyToTarget = false;
-
-			bool useThresholds = true;
 			byte repetitionCount = 1;
 
 			var command = new ResizeCommand(applyToTarget, SelectedFilter, TargetWidth, TargetHeight, 0, KeepAspect,
-				BoundsMode, BoundsMode, repetitionCount, useThresholds, UseCentralGrid, Radius);
+				BoundsMode, BoundsMode, repetitionCount, UseTreshholds, UseCentralGrid, Radius);
 
 			_scriptEngine.ExecuteAction(command);
 		});
