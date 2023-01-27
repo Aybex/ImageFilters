@@ -17,7 +17,7 @@
 	</ControlTemplate>
 
 	<ControlTemplate x:Key="ButtonIcon" TargetType="ui:Button">
-		<ui:Button Appearance="{TemplateBinding Appearance}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Padding="0">
+		<ui:Button Appearance="{TemplateBinding Appearance}" Height="{TemplateBinding Height}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" Padding="0" Command="{TemplateBinding Command}">
 			<Grid Width="{TemplateBinding Width}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="30"/>
@@ -28,4 +28,19 @@
 			</Grid>
 		</ui:Button>
 	</ControlTemplate>
+	
+
+
+<!--
+	<WrapPanel x:Name="SourceImage" Height="120" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+		<WrapPanel.OpacityMask>
+			<VisualBrush >
+				<VisualBrush.Visual>
+					<Border Height="{Binding ActualHeight, ElementName=SourceImage}" Width="{Binding ActualWidth, ElementName=SourceImage}" Background="White" CornerRadius="{StaticResource ImgCorner}" />
+				</VisualBrush.Visual>
+			</VisualBrush>
+		</WrapPanel.OpacityMask>
+		<Image Source="{Binding SourceImage, FallbackValue={StaticResource DefaultImage}, TargetNullValue={StaticResource DefaultImage}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+	</WrapPanel>
+-->
 </ResourceDictionary>

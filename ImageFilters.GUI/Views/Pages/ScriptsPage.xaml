@@ -26,6 +26,5 @@
             FontWeight="Medium"
             Text="Personalization" />
         <TextBlock Margin="0,12,0,0" Text="Theme" />
-       
     </StackPanel>
 </Page>

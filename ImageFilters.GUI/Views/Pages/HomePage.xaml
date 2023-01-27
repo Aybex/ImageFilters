@@ -249,7 +249,7 @@
 									Text="Use threshholds" />
 						</StackPanel>
 					</ui:CardControl.Header>
-					<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
+					<ui:ToggleSwitch IsChecked="{Binding UseTreshholds, Mode=TwoWay}"/>
 				</ui:CardControl>
 
 			</Grid>
