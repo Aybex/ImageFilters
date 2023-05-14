@@ -93,6 +93,7 @@
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
@@ -177,11 +178,11 @@
 							Text="Border extrapolation" />
 						</StackPanel>
 					</ui:CardControl.Header>
-					<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194"/>
+					<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194" Height="40" />
 				</ui:CardControl>
 				<Label  Grid.Row="3" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" VerticalAlignment="Bottom" Content="Advanced"/>
 				<!--Kernel function chart-->
-				<ui:Card Grid.Column="0" Grid.Row="4" Grid.RowSpan="3" Padding="0" Margin="0,0,0,5" VerticalAlignment="Stretch" VerticalContentAlignment="Top">
+				<ui:Card Grid.Column="0" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="3" Padding="0" Margin="0,0,0,5" VerticalAlignment="Stretch" VerticalContentAlignment="Top">
 					<StackPanel>
 
 						<TextBlock
@@ -197,23 +198,9 @@
 				</ui:Card>
 
 				<!--Central Grid-->
-				<ui:CardControl Grid.Row="4" Grid.Column="2" Template="{DynamicResource AccentCard}" Icon="GridDots24" Margin="0,0,0,5" VerticalAlignment="Stretch">
-					<ui:CardControl.Header>
-						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-							<TextBlock
-									FontSize="14"
-									FontWeight="Medium"
-									Text="Use central grid" />
-							<TextBlock
-									FontSize="12"
-									Text="Use a central grid" />
-						</StackPanel>
-					</ui:CardControl.Header>
-					<ui:ToggleSwitch IsChecked="{Binding UseCentralGrid, Mode=TwoWay}"/>
-				</ui:CardControl>
 
 				<!--Kernel radius-->
-				<ui:CardControl Grid.Row="5" Grid.Column="2" Template="{DynamicResource AccentCard}"  Icon="RadioButton24" IsEnabled="{Binding SelectedFilter.SupportsRadius}" Margin="0,0,0,5" VerticalAlignment="Stretch">
+				<ui:CardControl Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Template="{DynamicResource AccentCard}"  Icon="RadioButton24" IsEnabled="{Binding SelectedFilter.SupportsRadius}" Margin="0,0,0,5" VerticalAlignment="Stretch">
 					<ui:CardControl.Header>
 						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
 							<TextBlock
@@ -229,20 +216,6 @@
 				</ui:CardControl>
 
 				<!--Use thresholds-->
-				<ui:CardControl Grid.Row="6" Grid.Column="2" Template="{DynamicResource AccentCard}" Icon="GridDots24" Margin="0,0,0,5" VerticalAlignment="Stretch">
-					<ui:CardControl.Header>
-						<StackPanel HorizontalAlignment="Left"  VerticalAlignment="Center">
-							<TextBlock
-									FontSize="14"
-									FontWeight="Medium"
-									Text="Use threshholds" />
-							<TextBlock
-									FontSize="12"
-									Text="Use threshholds" />
-						</StackPanel>
-					</ui:CardControl.Header>
-					<ui:ToggleSwitch IsChecked="{Binding UseTreshholds, Mode=TwoWay}"/>
-				</ui:CardControl>
 
 			</Grid>
 		</Grid>

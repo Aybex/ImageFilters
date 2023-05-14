@@ -20,11 +20,19 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
-    <StackPanel Margin="42">
+    <StackPanel Margin="15">
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
-            Text="Personalization" />
-        <TextBlock Margin="0,12,0,0" Text="Theme" />
+            Text="Scripting" />
+        <TextBlock Margin="0,12,0,0" Text="Execute an operation the main tab te see the corresponding script here" />
+        <Grid MinHeight="300">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+					
+          <ui:CodeBlock></ui:CodeBlock>
+        </Grid>
     </StackPanel>
 </Page>

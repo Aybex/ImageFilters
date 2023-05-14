@@ -36,8 +36,6 @@ public partial class HomePageViewModel : ObservableObject
 	[ObservableProperty] private ushort _targetWidth;
 	[ObservableProperty] private ushort _targetHeight;
 	[ObservableProperty] private bool _keepAspect;
-	[ObservableProperty] private bool _useCentralGrid;
-	[ObservableProperty] private bool _useTreshholds;
 
 	[NotifyPropertyChangedFor(nameof(SelectedFilter))]
 	[ObservableProperty] private float _radius = 1;
@@ -148,13 +146,16 @@ public partial class HomePageViewModel : ObservableObject
 			byte repetitionCount = 1;
 
 			var command = new ResizeCommand(applyToTarget, SelectedFilter, TargetWidth, TargetHeight, 0, KeepAspect,
-				BoundsMode, BoundsMode, repetitionCount, UseTreshholds, UseCentralGrid, Radius);
+				BoundsMode, BoundsMode, repetitionCount, true, true, Radius);
 
 			_scriptEngine.ExecuteAction(command);
 		});
 		TargetImage = _scriptEngine.GdiTarget.ToBitmapImage();
 		TargetWidth = (ushort)TargetImage.PixelWidth;
 		TargetHeight = (ushort)TargetImage.PixelHeight;
+
+		var scrpt = ScriptSerializer.SerializeState(_scriptEngine);
+		Console.WriteLine(scrpt);
 	}
 
 	public void CalculateDimensions(bool maintainWidth = true)
