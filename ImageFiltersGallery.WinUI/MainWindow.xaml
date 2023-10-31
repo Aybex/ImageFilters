@@ -48,11 +48,15 @@
             BackRequested="NavigationViewControl_BackRequested" 
             ItemInvoked="NavigationViewControl_ItemInvoked"
             IsSettingsVisible="True"
+            PaneDisplayMode="LeftCompact"
+            IsPaneToggleButtonVisible="False"
+            
             >
             <NavigationView.Resources>
                 <Thickness x:Key="NavigationViewHeaderMargin">25,25,0,0</Thickness>
+                <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
                 <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
-                <SolidColorBrush x:Key="NavigationViewContentBackground">Transparent</SolidColorBrush>
+                <!--<SolidColorBrush x:Key="NavigationViewContentBackground">Transparent</SolidColorBrush>-->
             </NavigationView.Resources>
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
@@ -73,9 +77,19 @@
                 </DataTemplate>
             </NavigationView.HeaderTemplate>
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="ImageFiltersGallery.WinUI.Views.HomePage" />
+                <NavigationViewItem Icon="Home" Tag="ImageFiltersGallery.WinUI.Views.HomePage">
+                </NavigationViewItem>
                 <NavigationViewItem Icon="Page"  Content="Blank Page" Tag="ImageFiltersGallery.WinUI.Views.BlankPage" />
             </NavigationView.MenuItems>
+            <!--<NavigationView.MenuItemContainerStyle>
+                <Style TargetType="NavigationViewItem">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    --><!--<Setter Property="LabelPosition" Value="Bottom" />--><!--
+                </Style>
+            </NavigationView.MenuItemContainerStyle>-->
             <ScrollView Padding="15,15,15,0" HorizontalScrollBarVisibility="Hidden">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="600px" MaxWidth="1000">
                     <Frame Background="Transparent" x:Name="ContentFrame" Navigated="ContentFrame_Navigated" Margin="0" Padding="0"/>

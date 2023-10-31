@@ -8,8 +8,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="Themes/Generic.xaml"/>
                 <ResourceDictionary Source="Controls/Card.xaml"/>
-
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
 
@@ -18,7 +18,11 @@
             <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
             <!--<Thickness x:Key="NavigationViewContentMargin">0,48,10,10</Thickness>
             <CornerRadius x:Key="NavigationViewContentGridCornerRadius">8</CornerRadius>-->
+            <x:Double x:Key="NavigationViewCompactPaneLength">72</x:Double>
+            <x:Double x:Key="NavigationViewItemOnLeftIconBoxHeight">20</x:Double>
+            <Thickness x:Key="NavigationViewItemOnLeftIconBoxMargin">0,18,0,18</Thickness>
 
+            
 
 
         </ResourceDictionary>

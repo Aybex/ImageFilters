@@ -30,10 +30,14 @@
                         Padding="{TemplateBinding Padding}"
                     >
 
-                        <StackPanel>
-                            <ContentPresenter Content="{TemplateBinding Header}" />
-                            <ContentPresenter Content="{TemplateBinding Content}" />
-                        </StackPanel>
+                        <Grid Padding="2" RowSpacing="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Top" FontSize="18" FontStretch="Expanded" FontWeight="Medium" Text="{TemplateBinding Header}" />
+                            <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" />
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

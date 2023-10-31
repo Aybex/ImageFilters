@@ -12,7 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="CardControl.xaml" />
-    <None Remove="Themes\Card.xaml" />
+    <None Remove="Themes\Generic.xaml" />
     <None Remove="Views\BlankPage.xaml" />
   </ItemGroup>
 
@@ -38,13 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Themes\Card.xaml">
+    <Page Update="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>

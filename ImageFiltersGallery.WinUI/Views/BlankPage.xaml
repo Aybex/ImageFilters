@@ -8,7 +8,39 @@
     mc:Ignorable="d"
     NavigationCacheMode="Required">
 
-    <Grid>
-        <TextBlock Text="Blank Page"/>
-    </Grid>
+    <StackPanel x:Name="aa" Grid.RowSpan="1" Background="Red" Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="5" Padding="0" Height="32" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState  x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="500"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <!-- Custom styles for the child when the "WideScreen" state is activated -->
+                        <Setter Target="aa.Background" Value="Green"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Button Width="100" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Padding="0">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Width="32" Height="32" FontSize="16" Margin="0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE7AC;"/>
+                <TextBlock TextAlignment="Center" Grid.Column="1" Text="Browse" VerticalAlignment="Center" />
+            </Grid>
+
+        </Button>
+
+        <Button Padding="0" Grid.Column="2" ToolTipService.ToolTip="Open the selected Image">
+            <FontIcon Width="32" Height="32" FontSize="16" Margin="0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8E5;"/>
+        </Button>
+
+        <Button Padding="0" Grid.Column="3">
+            <FontIcon Width="32" Height="32" FontSize="16" Margin="0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DA;"/>
+        </Button>
+    </StackPanel>
 </Page>
