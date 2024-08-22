@@ -26,7 +26,7 @@ public partial class SettingsViewModel : ObservableObject, INavigationAware
     private void InitializeViewModel()
     {
 	    CurrentTheme = ApplicationThemeManager.GetAppTheme();
-        AppVersion = $"Wpf.Ui.Demo.Mvvm - {GetAssemblyVersion()}"; // TODO : Update App name
+        AppVersion = $"Image filters - {GetAssemblyVersion()}"; // TODO : Update App name
 
         _isInitialized = true;
     }

@@ -28,15 +28,14 @@
 		<system:String x:Key="DefaultSize">W : 0 | H : 0</system:String>
 	</Page.Resources>
 
-	<ScrollViewer Padding="10" VerticalScrollBarVisibility="Visible" >
-		<Grid>
+		<Grid x:Name="MainScrollViewer"  >
 			<Grid.RowDefinitions>
 				<RowDefinition Height="200"/>
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 
 			<!--Header-->
-			<Grid Grid.Row="0" VerticalAlignment="Center" Margin="0,0,0,5">
+		<Grid  Margin="10,5,10,10" Grid.Row="0" VerticalAlignment="Center">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="1*"/>
 					<ColumnDefinition Width="5"/>
@@ -84,7 +83,7 @@
 				</ui:Card>
 			</Grid>
 
-			<Grid Grid.Row="1" Height="510" VerticalAlignment="Top">
+			<Grid Margin="10,5" Grid.Row="1" Height="540" VerticalAlignment="Top">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="*"/>
@@ -127,7 +126,7 @@
 						</StackPanel>
 					</ui:CardControl.Header>
 					<WrapPanel>
-						<ui:NumberBox Value="{Binding TargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" MaxDecimalPlaces="0"  PlaceholderText="1920" SpinButtonPlacementMode="Hidden"  Width="100"/>
+						<ui:NumberBox Value="{Binding TargetWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Minimum="0" MaxDecimalPlaces="0"  PlaceholderText="1920" SpinButtonPlacementMode="Hidden"  Width="100" Height="31" VerticalContentAlignment="Center"/>
 						<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
 					</WrapPanel>
 				</ui:CardControl>
@@ -146,7 +145,7 @@
 						</StackPanel>
 					</ui:CardControl.Header>
 					<WrapPanel Visibility="{Binding KeepAspect, Converter={StaticResource BoolToVis}}">
-						<ui:NumberBox Minimum="0" MaxDecimalPlaces="0" Value="{Binding TargetHeight, Mode=TwoWay}" PlaceholderText="1920" SpinButtonPlacementMode="Hidden" Width="100"/>
+					<ui:NumberBox Minimum="0" MaxDecimalPlaces="0" Value="{Binding TargetHeight, Mode=TwoWay}" PlaceholderText="1920" SpinButtonPlacementMode="Hidden" Width="100"  Height="31" VerticalContentAlignment="Center"/>
 						<TextBlock Margin="3,0" VerticalAlignment="Center"><Run Text="px"/></TextBlock>
 					</WrapPanel>
 				</ui:CardControl>
@@ -178,7 +177,7 @@
 							Text="Border extrapolation" />
 						</StackPanel>
 					</ui:CardControl.Header>
-					<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194" Height="40" />
+					<ComboBox SelectedIndex="0" SelectedItem="{Binding BoundsMode}" ItemsSource="{Binding Source={helpers:EnumBindingSource {x:Type enums:OutOfBoundsMode}}}" Width="194" FontSize="5" />
 				</ui:CardControl>
 				<Label  Grid.Row="3" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextFillColorPrimaryBrush}" VerticalAlignment="Bottom" Content="Advanced"/>
 				<!--Kernel function chart-->
@@ -219,5 +218,4 @@
 
 			</Grid>
 		</Grid>
-	</ScrollViewer>
 </Page>

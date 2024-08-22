@@ -27,6 +27,18 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
+		
+
+		<ui:TitleBar
+			x:Name="TitleBar"
+			Title="{Binding ViewModel.ApplicationTitle}"
+			Grid.Row="0"
+			CloseWindowByDoubleClickOnIcon="True">
+			<ui:TitleBar.Icon>
+				<ui:ImageIcon Source="pack://application:,,,/Assets/Icon-256.png" />
+			</ui:TitleBar.Icon>
+		</ui:TitleBar>
+
 		<ui:NavigationView PaneDisplayMode="LeftFluent"
             x:Name="RootNavigation"
             Grid.Row="1"
@@ -42,10 +54,6 @@
 		</ui:NavigationView>
 
 
-		<ui:TitleBar
-			Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-			Grid.Row="0"
-			Icon="pack://application:,,,/Assets/Icon-256.png" />
 
 
 	</Grid>

@@ -2,7 +2,9 @@
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ImageFilters.GUI.Helpers;
+using System.Windows.Media;
 
 namespace ImageFilters.GUI.Views.Pages;
 
@@ -14,6 +16,7 @@ public partial class HomePage : Page
 	{
 		InitializeComponent();
 		DataContext = ViewModel = new HomePageViewModel();
+
 	}
 
 	private void LoadImage_Click(object sender, RoutedEventArgs e)
@@ -50,4 +53,5 @@ public partial class HomePage : Page
 		DataContext = ViewModel = new HomePageViewModel();
 		GC.Collect();
 	}
+
 }
