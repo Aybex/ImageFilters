@@ -48,9 +48,7 @@ public partial class App : Application
 			services.AddScoped<Views.Pages.HomePage>();
 			services.AddScoped<ViewModels.HomePageViewModel>();
 			services.AddScoped<Views.Pages.SettingsPage>();
-			services.AddScoped<Views.Pages.ScriptsPage>();
 			services.AddScoped<ViewModels.SettingsViewModel>();
-			services.AddScoped<ViewModels.ScriptsViewModel>();
 
 			// Configuration
 			//services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

@@ -42,12 +42,6 @@ public partial class MainWindowViewModel : ObservableObject
 					Content = "Home",
 					Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
 					TargetPageType = typeof(Views.Pages.HomePage)
-				},              
-				new NavigationViewItem()
-				{
-					Content = "Scripts",
-					Icon = new SymbolIcon { Symbol = SymbolRegular.Script16 },
-					TargetPageType = typeof(Views.Pages.ScriptsPage)
 				},
 			};
 
