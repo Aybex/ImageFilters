@@ -50,6 +50,6 @@ public class RadiusResampler : IImageManipulator {
 
   public RadiusResampler(WindowType type) => _type = type;
 
-  public Kernels.FixedRadiusKernelInfo GetKernelMethodInfo(float radius) => Windows.WINDOWS[_type].WithRadius(radius);
+  public Kernels.FixedRadiusKernelInfo GetKernelMethodInfo(float radius) => ImageFilters.Core.Imager.Classes.Windows.WINDOWS[_type].WithRadius(radius);
 
 }

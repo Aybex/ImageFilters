@@ -1,4 +1,4 @@
-﻿using Wpf.Ui.Controls.Navigation;
+﻿using Wpf.Ui.Controls;
 
 namespace ImageFilters.GUI.Views.Pages;
 

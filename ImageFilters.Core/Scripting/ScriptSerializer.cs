@@ -24,7 +24,6 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using ImageFilters.Core.Imager.Interface;
 using ImageFilters.Core.Scripting.ScriptActions;
-using word = System.UInt16;
 
 namespace ImageFilters.Core.Scripting;
 
@@ -254,17 +253,17 @@ public class ScriptSerializer
         var height = match.Groups["height"].Value;
         var percent = match.Groups["percent"].Value;
 
-        word targetWidth = 0;
-        word targetHeight = 0;
-        word targetPercent = 0;
+        ushort targetWidth = 0;
+        ushort targetHeight = 0;
+        ushort targetPercent = 0;
 
-        if (!(string.IsNullOrWhiteSpace(width) || word.TryParse(width, out targetWidth)))
+        if (!(string.IsNullOrWhiteSpace(width) || ushort.TryParse(width, out targetWidth)))
             return ExitCode.CouldNotParseDimensionsAsWord;
 
-        if (!(string.IsNullOrWhiteSpace(height) || word.TryParse(height, out targetHeight)))
+        if (!(string.IsNullOrWhiteSpace(height) || ushort.TryParse(height, out targetHeight)))
             return ExitCode.CouldNotParseDimensionsAsWord;
 
-        if (!(string.IsNullOrWhiteSpace(percent) || word.TryParse(percent, out targetPercent)))
+        if (!(string.IsNullOrWhiteSpace(percent) || ushort.TryParse(percent, out targetPercent)))
             return ExitCode.CouldNotParseDimensionsAsWord;
 
         var useAspect = targetWidth == 0 || targetHeight == 0;

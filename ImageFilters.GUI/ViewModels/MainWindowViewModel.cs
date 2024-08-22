@@ -4,9 +4,8 @@
 // All Rights Reserved.
 
 using System.Collections.ObjectModel;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.Navigation;
 
 namespace ImageFilters.GUI.ViewModels;
 

@@ -19,7 +19,6 @@
  */
 #endregion
 
-using dword = System.UInt32;
 namespace ImageFilters.Core.Imager; 
 
 /// <summary>
@@ -34,7 +33,7 @@ public class cRGBCache {
   /// <param name="key">The 32-bit color code.</param>
   /// <param name="factory">The factory that would calculate a result if it's not already in the cache.</param>
   /// <returns>The calculation result.</returns>
-  public unsafe byte GetOrAdd(dword key, Func<dword, byte> factory) {
+  public unsafe byte GetOrAdd(uint key, Func<uint, byte> factory) {
     fixed (ushort* ptr = _valueCache) {
       var result = ptr[key];
       if (result > 255)

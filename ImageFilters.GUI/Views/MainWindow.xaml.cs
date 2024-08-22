@@ -1,4 +1,6 @@
-﻿using Wpf.Ui.Controls.Navigation;
+﻿using Wpf.Ui;
+using Wpf.Ui.Appearance;
+using Wpf.Ui.Controls;
 
 namespace ImageFilters.GUI.Views;
 
@@ -17,7 +19,7 @@ public partial class MainWindow : INavigationWindow
 		ViewModel = viewModel;
 		DataContext = this;
 
-		Wpf.Ui.Appearance.Watcher.Watch(this);
+		SystemThemeWatcher.Watch(this);
 
 		InitializeComponent();
 		SetPageService(pageService);

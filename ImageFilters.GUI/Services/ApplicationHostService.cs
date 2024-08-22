@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using ImageFilters.GUI.Views;
+using Wpf.Ui;
 
 namespace ImageFilters.GUI.Services;
 

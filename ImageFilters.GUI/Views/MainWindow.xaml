@@ -34,28 +34,19 @@
             MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}">
 
 			<ui:NavigationView.Header>
-				<ui:NavigationViewBreadcrumb
+				<ui:BreadcrumbBar 
                     Margin="42,6,0,0"
                     FontSize="28"
                     FontWeight="DemiBold" />
 			</ui:NavigationView.Header>
 		</ui:NavigationView>
 
+
 		<ui:TitleBar
-            Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-            Grid.Row="0"
-            Icon="pack://application:,,,/Assets/Icon-256.png">
-			<ui:TitleBar.Tray>
-				<ui:NotifyIcon
-                    FocusOnLeftClick="True"
-                    Icon="pack://application:,,,/Assets/Icon-256.png"
-                    MenuOnRightClick="True"
-                    TooltipText="WPF UI - MVVM Demo">
-					<ui:NotifyIcon.Menu>
-						<ContextMenu ItemsSource="{Binding ViewModel.TrayMenuItems, Mode=OneWay}" />
-					</ui:NotifyIcon.Menu>
-				</ui:NotifyIcon>
-			</ui:TitleBar.Tray>
-		</ui:TitleBar>
+			Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
+			Grid.Row="0"
+			Icon="pack://application:,,,/Assets/Icon-256.png" />
+
+
 	</Grid>
 </ui:FluentWindow>

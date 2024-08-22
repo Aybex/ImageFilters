@@ -22,12 +22,11 @@
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Runtime.Serialization;
-using dword = System.UInt32;
 
 namespace ImageFilters.Core.Imager;
 
 /// <summary>
-/// A pixel (dword) 32Bits wide, 8 Bits for red, green, blue and alpha values.
+/// A pixel (uint) 32Bits wide, 8 Bits for red, green, blue and alpha values.
 /// </summary>
 public struct sPixel : ICloneable, ISerializable
 {
@@ -43,7 +42,7 @@ public struct sPixel : ICloneable, ISerializable
     /// <summary>
     /// The value holding the red, green, blue and alpha component
     /// </summary>
-    private readonly dword _argbBytes;
+    private readonly uint _argbBytes;
 
     #region caches
 
@@ -330,7 +329,7 @@ public struct sPixel : ICloneable, ISerializable
             return
               _CACHE_BRIGHTNESS.GetOrAdd(
                 _argbBytes & _RGB_MASK,
-                dwordC => (byte)((_GetRed(dwordC) * 3 + _GetGreen(dwordC) * 3 + _GetBlue(dwordC) * 2) >> 3));
+                uintC => (byte)((_GetRed(uintC) * 3 + _GetGreen(uintC) * 3 + _GetBlue(uintC) * 2) >> 3));
         }
     }
 
@@ -474,7 +473,7 @@ public struct sPixel : ICloneable, ISerializable
     /// Prevents a default instance of the <see cref="sPixel"/> struct from being created.
     /// </summary>
     /// <param name="argbData">The RGB data.</param>
-    private sPixel(dword argbData)
+    private sPixel(uint argbData)
     {
         _argbBytes = argbData;
     }
@@ -958,7 +957,7 @@ public struct sPixel : ICloneable, ISerializable
     /// <param name="_">The streaming context.</param>
     public sPixel(SerializationInfo serializationInfo, StreamingContext _)
     {
-        _argbBytes = (dword)serializationInfo.GetValue("value", typeof(dword));
+        _argbBytes = (uint)serializationInfo.GetValue("value", typeof(uint));
     }
 
     /// <summary>

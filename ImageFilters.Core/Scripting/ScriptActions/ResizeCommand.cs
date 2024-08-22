@@ -2,7 +2,6 @@
 using ImageFilters.Core.ImageManipulators;
 using ImageFilters.Core.Imager;
 using ImageFilters.Core.Imager.Interface;
-using word = System.UInt16;
 
 namespace ImageFilters.Core.Scripting.ScriptActions;
 
@@ -24,8 +23,8 @@ public class ResizeCommand : IScriptAction
         var percentage = Percentage;
         if (percentage > 0)
         {
-            width = (word)Math.Round(source.Width * percentage / 100d);
-            height = (word)Math.Round(source.Height * percentage / 100d);
+            width = (ushort)Math.Round(source.Width * percentage / 100d);
+            height = (ushort)Math.Round(source.Height * percentage / 100d);
         }
 
         // correct aspect ratio if needed
@@ -33,11 +32,11 @@ public class ResizeCommand : IScriptAction
         {
             if (width == 0)
             {
-                width = (word)Math.Round((double)height * source.Width / source.Height);
+                width = (ushort)Math.Round((double)height * source.Width / source.Height);
             }
             else
             {
-                height = (word)Math.Round((double)width * source.Height / source.Width);
+                height = (ushort)Math.Round((double)width * source.Height / source.Width);
             }
         }
 
@@ -82,8 +81,8 @@ public class ResizeCommand : IScriptAction
     #endregion
 
     public IImageManipulator Manipulator { get; }
-    public word Width { get; }
-    public word Height { get; }
+    public ushort Width { get; }
+    public ushort Height { get; }
     public bool MaintainAspect { get; }
     public OutOfBoundsMode HorizontalBph { get; }
     public OutOfBoundsMode VerticalBph { get; }
@@ -91,11 +90,11 @@ public class ResizeCommand : IScriptAction
     public bool UseThresholds { get; }
     public bool UseCenteredGrid { get; }
     public float Radius { get; }
-    public word Percentage { get; }
+    public ushort Percentage { get; }
 
     private readonly bool _applyToTarget;
 
-    public ResizeCommand(bool applyToTarget, IImageManipulator manipulator, word width, word height, word percentage, bool maintainAspect, OutOfBoundsMode horizontalBph, OutOfBoundsMode verticalBph, byte count, bool useThresholds, bool useCenteredGrid, float radius)
+    public ResizeCommand(bool applyToTarget, IImageManipulator manipulator, ushort width, ushort height, ushort percentage, bool maintainAspect, OutOfBoundsMode horizontalBph, OutOfBoundsMode verticalBph, byte count, bool useThresholds, bool useCenteredGrid, float radius)
     {
         _applyToTarget = applyToTarget;
         Manipulator = manipulator;

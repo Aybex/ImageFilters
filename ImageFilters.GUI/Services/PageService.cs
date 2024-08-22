@@ -1,4 +1,6 @@
-﻿namespace ImageFilters.GUI.Services;
+﻿using Wpf.Ui;
+
+namespace ImageFilters.GUI.Services;
 
 /// <summary>
 /// Service that provides pages for navigation.

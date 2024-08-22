@@ -32,7 +32,7 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
 					
-          <ui:CodeBlock></ui:CodeBlock>
+        
         </Grid>
     </StackPanel>
 </Page>

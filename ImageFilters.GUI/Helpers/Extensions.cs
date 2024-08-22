@@ -36,7 +36,7 @@ public static class Extensions
 		BitmapEncoder encoder = new PngBitmapEncoder();
 		encoder.Frames.Add(BitmapFrame.Create(image));
 
-		using var fileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Create);
+		using var fileStream = new FileStream(filePath, FileMode.Create);
 		encoder.Save(fileStream);
 	}
 }
@@ -65,18 +65,18 @@ public class EnumBindingSourceExtension : MarkupExtension
 
 	public EnumBindingSourceExtension(Type? enumType)
 	{
-		this.EnumType = enumType;
+		EnumType = enumType;
 	}
 
 	public override object ProvideValue(IServiceProvider serviceProvider)
 	{
-		if (null == this._enumType)
+		if (null == _enumType)
 			throw new InvalidOperationException("The EnumType must be specified.");
 
-		Type actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
+		Type actualEnumType = Nullable.GetUnderlyingType(_enumType) ?? _enumType;
 		Array enumValues = Enum.GetValues(actualEnumType);
 
-		if (actualEnumType == this._enumType)
+		if (actualEnumType == _enumType)
 			return enumValues;
 
 		Array tempArray = Array.CreateInstance(actualEnumType, enumValues.Length + 1);

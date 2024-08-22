@@ -6,6 +6,7 @@ using LiveChartsCore.SkiaSharpView;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Wpf.Ui;
 
 namespace ImageFilters.GUI;
 

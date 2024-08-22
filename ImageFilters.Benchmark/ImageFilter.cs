@@ -11,6 +11,7 @@ namespace ImageFilters.Benchmark
 {
     [MemoryDiagnoser]
     [RankColumn]
+ //   [ShortRunJob]
     public class ImageFilter
     {
         //Props and Fiels :
@@ -20,7 +21,7 @@ namespace ImageFilters.Benchmark
 
         public ImageFilter()
         {
-            LoadImage("Images/test.bmp");
+            LoadImage("Images/1k.png");
         }
 
         private void LoadImage(string fileName)
@@ -51,7 +52,7 @@ namespace ImageFilters.Benchmark
             resultImage.Save(fileName, ImageFormat.Png);
         }
 
-        private void ScaleImage(int methodIndex, bool saveImage = false, float factor = 4)
+        private Image ScaleImage(int methodIndex, bool saveImage = false, float factor = 2)
         {
             bool applyToTarget = false;
             string methodName = SupportedManipulators.MANIPULATORS[methodIndex].Key;
@@ -73,139 +74,141 @@ namespace ImageFilters.Benchmark
 
             if (saveImage)
                 SaveImage(methodName);
+
+            return resultImage;
         }
 
         #region MethodsBenchmark 
 
-        [Benchmark] public void NearestNeighborGDI() { ScaleImage(0); }
-        [Benchmark] public void BilinearGDI() { ScaleImage(1); }
-        [Benchmark] public void BicubicGDI() { ScaleImage(2); }
-        [Benchmark] public void HighQualityBilinearGDI() { ScaleImage(3); }
-        [Benchmark] public void HighQualityBicubicGDI() { ScaleImage(4); }
-        [Benchmark] public void Rectangular() { ScaleImage(5); }
-        [Benchmark] public void Bicubic() { ScaleImage(6); }
-        [Benchmark] public void Schaum2() { ScaleImage(7); }
-        [Benchmark] public void Schaum3() { ScaleImage(8); }
-        [Benchmark] public void BSpline2() { ScaleImage(9); }
-        [Benchmark] public void BSpline3() { ScaleImage(10); }
-        [Benchmark] public void BSpline5() { ScaleImage(11); }
-        [Benchmark] public void BSpline7() { ScaleImage(12); }
-        [Benchmark] public void BSpline9() { ScaleImage(13); }
-        [Benchmark] public void BSpline11() { ScaleImage(14); }
-        [Benchmark] public void OMoms3() { ScaleImage(15); }
-        [Benchmark] public void OMoms5() { ScaleImage(16); }
-        [Benchmark] public void OMoms7() { ScaleImage(17); }
-        [Benchmark] public void Triangular() { ScaleImage(18); }
-        [Benchmark] public void Welch() { ScaleImage(19); }
-        [Benchmark] public void Hann() { ScaleImage(20); }
-        [Benchmark] public void Hamming() { ScaleImage(21); }
-        [Benchmark] public void Blackman() { ScaleImage(22); }
-        [Benchmark] public void Nuttal() { ScaleImage(23); }
-        [Benchmark] public void BlackmanNuttal() { ScaleImage(24); }
-        [Benchmark] public void BlackmanHarris() { ScaleImage(25); }
-        [Benchmark] public void FlatTop() { ScaleImage(26); }
-        [Benchmark] public void PowerOfCosine() { ScaleImage(27); }
-        [Benchmark] public void Cosine() { ScaleImage(28); }
-        [Benchmark] public void Gauss() { ScaleImage(29); }
-        [Benchmark] public void Tukey() { ScaleImage(30); }
-        [Benchmark] public void Poisson() { ScaleImage(31); }
-        [Benchmark] public void BartlettHann() { ScaleImage(32); }
-        [Benchmark] public void HanningPoisson() { ScaleImage(33); }
-        [Benchmark] public void Bohman() { ScaleImage(34); }
-        [Benchmark] public void Cauchy() { ScaleImage(35); }
-        [Benchmark] public void Lanczos() { ScaleImage(36); }
-        [Benchmark] public void Scanlines50Minus() { ScaleImage(37); }
-        [Benchmark] public void Scanlines50Plus() { ScaleImage(38); }
-        [Benchmark] public void Scanlines100Plus() { ScaleImage(39); }
-        [Benchmark] public void VScanlines50Minus() { ScaleImage(40); }
-        [Benchmark] public void VScanlines50Plus() { ScaleImage(41); }
-        [Benchmark] public void VScanlines100Plus() { ScaleImage(42); }
-        [Benchmark] public void MAMETV2x() { ScaleImage(43); }
-        [Benchmark] public void MAMETV3x() { ScaleImage(44); }
-        [Benchmark] public void MAMERGB2x() { ScaleImage(45); }
-        [Benchmark] public void MAMERGB3x() { ScaleImage(46); }
-        [Benchmark] public void HawkyntTV2x() { ScaleImage(47); }
-        [Benchmark] public void HawkyntTV3x() { ScaleImage(48); }
-        [Benchmark] public void BilinearPlusOriginal() { ScaleImage(49); }
-        [Benchmark] public void BilinearPlus() { ScaleImage(50); }
-        [Benchmark] public void Eagle2x() { ScaleImage(51); }
-        [Benchmark] public void Eagle3x() { ScaleImage(52); }
-        [Benchmark] public void Eagle3xB() { ScaleImage(53); }
-        [Benchmark] public void SuperEagle() { ScaleImage(54); }
-        [Benchmark] public void SaI2x() { ScaleImage(55); }
-        [Benchmark] public void SuperSaI() { ScaleImage(56); }
-        [Benchmark] public void AdvInterp2x() { ScaleImage(57); }
-        [Benchmark] public void AdvInterp3x() { ScaleImage(58); }
-        [Benchmark] public void Scale2x() { ScaleImage(59); }
-        [Benchmark] public void Scale3x() { ScaleImage(60); }
-        [Benchmark] public void EPXB() { ScaleImage(61); }
-        [Benchmark] public void EPXC() { ScaleImage(62); }
-        [Benchmark] public void EPX3() { ScaleImage(63); }
-        [Benchmark] public void ReverseAA() { ScaleImage(64); }
-        [Benchmark] public void DES() { ScaleImage(65); }
-        [Benchmark] public void DESII() { ScaleImage(66); }
-        [Benchmark] public void SCL2x() { ScaleImage(67); }
-        [Benchmark] public void Super2xSCL() { ScaleImage(68); }
-        [Benchmark] public void Ultra2xSCL() { ScaleImage(69); }
-        [Benchmark] public void XBR2xNoBlend() { ScaleImage(70); }
-        [Benchmark] public void XBR3xNoBlend() { ScaleImage(71); }
-        [Benchmark] public void XBR3xmodifiedNoBlend() { ScaleImage(72); }
-        [Benchmark] public void XBR4xNoBlend() { ScaleImage(73); }
-        [Benchmark] public void XBR2x() { ScaleImage(74); }
-        [Benchmark] public void XBR3x() { ScaleImage(75); }
-        [Benchmark] public void XBR3xmodified() { ScaleImage(76); }
-        [Benchmark] public void XBR4x() { ScaleImage(77); }
-        [Benchmark] public void XBR5xlegacy() { ScaleImage(78); }
-        [Benchmark] public void XBRz2x() { ScaleImage(79); }
-        [Benchmark] public void XBRz3x() { ScaleImage(80); }
-        [Benchmark] public void XBRz4x() { ScaleImage(81); }
-        [Benchmark] public void XBRz5x() { ScaleImage(82); }
-        [Benchmark] public void HQ2x() { ScaleImage(83); }
-        [Benchmark] public void HQ2xBold() { ScaleImage(84); }
-        [Benchmark] public void HQ2xSmart() { ScaleImage(85); }
-        [Benchmark] public void HQ2x3() { ScaleImage(86); }
-        [Benchmark] public void HQ2x3Bold() { ScaleImage(87); }
-        [Benchmark] public void HQ2x3Smart() { ScaleImage(88); }
-        [Benchmark] public void HQ2x4() { ScaleImage(89); }
-        [Benchmark] public void HQ2x4Bold() { ScaleImage(90); }
-        [Benchmark] public void HQ2x4Smart() { ScaleImage(91); }
-        [Benchmark] public void HQ3x() { ScaleImage(92); }
-        [Benchmark] public void HQ3xBold() { ScaleImage(93); }
-        [Benchmark] public void HQ3xSmart() { ScaleImage(94); }
-        [Benchmark] public void HQ4x() { ScaleImage(95); }
-        [Benchmark] public void HQ4xBold() { ScaleImage(96); }
-        [Benchmark] public void HQ4xSmart() { ScaleImage(97); }
-        [Benchmark] public void LQ2x() { ScaleImage(98); }
-        [Benchmark] public void LQ2xBold() { ScaleImage(99); }
-        [Benchmark] public void LQ2xSmart() { ScaleImage(100); }
-        [Benchmark] public void LQ2x3() { ScaleImage(101); }
-        [Benchmark] public void LQ2x3Bold() { ScaleImage(102); }
-        [Benchmark] public void LQ2x3Smart() { ScaleImage(103); }
-        [Benchmark] public void LQ2x4() { ScaleImage(104); }
-        [Benchmark] public void LQ2x4Bold() { ScaleImage(105); }
-        [Benchmark] public void LQ2x4Smart() { ScaleImage(106); }
-        [Benchmark] public void LQ3x() { ScaleImage(107); }
-        [Benchmark] public void LQ3xBold() { ScaleImage(108); }
-        [Benchmark] public void LQ3xSmart() { ScaleImage(109); }
-        [Benchmark] public void LQ4x() { ScaleImage(110); }
-        [Benchmark] public void LQ4xBold() { ScaleImage(111); }
-        [Benchmark] public void LQ4xSmart() { ScaleImage(112); }
-        [Benchmark] public void Red() { ScaleImage(113); }
-        [Benchmark] public void Green() { ScaleImage(114); }
-        [Benchmark] public void Blue() { ScaleImage(115); }
-        [Benchmark] public void Alpha() { ScaleImage(116); }
-        [Benchmark] public void Luminance() { ScaleImage(117); }
-        [Benchmark] public void ChrominanceU() { ScaleImage(118); }
-        [Benchmark] public void ChrominanceV() { ScaleImage(119); }
-        [Benchmark] public void u() { ScaleImage(120); }
-        [Benchmark] public void v() { ScaleImage(121); }
-        [Benchmark] public void Hue() { ScaleImage(122); }
-        [Benchmark] public void HueColored() { ScaleImage(123); }
-        [Benchmark] public void Brightness() { ScaleImage(124); }
-        [Benchmark] public void Min() { ScaleImage(125); }
-        [Benchmark] public void Max() { ScaleImage(126); }
-        [Benchmark] public void ExtractColors() { ScaleImage(127); }
-        [Benchmark] public void ExtractDeltas() { ScaleImage(128); }
+        [Benchmark] public Image NearestNeighborGDI() { return ScaleImage(0); }
+        //[Benchmark] public Image BilinearGDI() { return ScaleImage(1); }
+        //[Benchmark] public Image BicubicGDI() { return ScaleImage(2); }
+        [Benchmark] public Image HighQualityBilinearGDI() { return ScaleImage(3); }
+        [Benchmark] public Image HighQualityBicubicGDI() { return ScaleImage(4); }
+        [Benchmark] public Image Rectangular() { return ScaleImage(5); }
+        //[Benchmark] public Image Bicubic() { return ScaleImage(6); }
+        //[Benchmark] public Image Schaum2() { return ScaleImage(7); }
+        //[Benchmark] public Image Schaum3() { return ScaleImage(8); }
+        //[Benchmark] public Image BSpline2() { return ScaleImage(9); }
+        //[Benchmark] public Image BSpline3() { return ScaleImage(10); }
+        //[Benchmark] public Image BSpline5() { return ScaleImage(11); }
+        //[Benchmark] public Image BSpline7() { return ScaleImage(12); }
+        //[Benchmark] public Image BSpline9() { return ScaleImage(13); }
+        //[Benchmark] public Image BSpline11() { return ScaleImage(14); }
+        //[Benchmark] public Image OMoms3() { return ScaleImage(15); }
+        //[Benchmark] public Image OMoms5() { return ScaleImage(16); }
+        //[Benchmark] public Image OMoms7() { return ScaleImage(17); }
+        [Benchmark] public Image Triangular() { return ScaleImage(18); }
+        [Benchmark] public Image Welch() { return ScaleImage(19); }
+        [Benchmark] public Image Hann() { return ScaleImage(20); }
+        [Benchmark] public Image Hamming() { return ScaleImage(21); }
+        [Benchmark] public Image Blackman() { return ScaleImage(22); }
+        //[Benchmark] public Image Nuttal() { return ScaleImage(23); }
+        //[Benchmark] public Image BlackmanNuttal() { return ScaleImage(24); }
+        //[Benchmark] public Image BlackmanHarris() { return ScaleImage(25); }
+        //[Benchmark] public Image FlatTop() { return ScaleImage(26); }
+        //[Benchmark] public Image PowerOfCosine() { return ScaleImage(27); }
+        //[Benchmark] public Image Cosine() { return ScaleImage(28); }
+        //[Benchmark] public Image Gauss() { return ScaleImage(29); }
+        //[Benchmark] public Image Tukey() { return ScaleImage(30); }
+        //[Benchmark] public Image Poisson() { return ScaleImage(31); }
+        //[Benchmark] public Image BartlettHann() { return ScaleImage(32); }
+        //[Benchmark] public Image HanningPoisson() { return ScaleImage(33); }
+        //[Benchmark] public Image Bohman() { return ScaleImage(34); }
+        //[Benchmark] public Image Cauchy() { return ScaleImage(35); }
+        [Benchmark] public Image Lanczos() { return ScaleImage(36); }
+        //[Benchmark] public Image Scanlines50Minus() { return ScaleImage(37); }
+        //[Benchmark] public Image Scanlines50Plus() { return ScaleImage(38); }
+        //[Benchmark] public Image Scanlines100Plus() { return ScaleImage(39); }
+        //[Benchmark] public Image VScanlines50Minus() { return ScaleImage(40); }
+        //[Benchmark] public Image VScanlines50Plus() { return ScaleImage(41); }
+        //[Benchmark] public Image VScanlines100Plus() { return ScaleImage(42); }
+        //[Benchmark] public Image MAMETV2x() { return ScaleImage(43); }
+        //[Benchmark] public Image MAMETV3x() { return ScaleImage(44); }
+        //[Benchmark] public Image MAMERGB2x() { return ScaleImage(45); }
+        //[Benchmark] public Image MAMERGB3x() { return ScaleImage(46); }
+        //[Benchmark] public Image HawkyntTV2x() { return ScaleImage(47); }
+        //[Benchmark] public Image HawkyntTV3x() { return ScaleImage(48); }
+        //[Benchmark] public Image BilinearPlusOriginal() { return ScaleImage(49); }
+        //[Benchmark] public Image BilinearPlus() { return ScaleImage(50); }
+        [Benchmark] public Image Eagle2x() { return ScaleImage(51); }
+        //[Benchmark] public Image Eagle3x() { return ScaleImage(52); }
+        //[Benchmark] public Image Eagle3xB() { return ScaleImage(53); }
+        [Benchmark] public Image SuperEagle() { return ScaleImage(54); }
+        [Benchmark] public Image SaI2x() { return ScaleImage(55); }
+        [Benchmark] public Image SuperSaI() { return ScaleImage(56); }
+        //[Benchmark] public Image AdvInterp2x() { return ScaleImage(57); }
+        //[Benchmark] public Image AdvInterp3x() { return ScaleImage(58); }
+        [Benchmark] public Image Scale2x() { return ScaleImage(59); }
+        [Benchmark] public Image Scale3x() { return ScaleImage(60); }
+        [Benchmark] public Image EPXB() { return ScaleImage(61); }
+        [Benchmark] public Image EPXC() { return ScaleImage(62); }
+        [Benchmark] public Image EPX3() { return ScaleImage(63); }
+        [Benchmark] public Image ReverseAA() { return ScaleImage(64); }
+        [Benchmark] public Image DES() { return ScaleImage(65); }
+        [Benchmark] public Image DESII() { return ScaleImage(66); }
+        [Benchmark] public Image SCL2x() { return ScaleImage(67); }
+        [Benchmark] public Image Super2xSCL() { return ScaleImage(68); }
+        [Benchmark] public Image Ultra2xSCL() { return ScaleImage(69); }
+        [Benchmark] public Image XBR2xNoBlend() { return ScaleImage(70); }
+        [Benchmark] public Image XBR3xNoBlend() { return ScaleImage(71); }
+        [Benchmark] public Image XBR3xmodifiedNoBlend() { return ScaleImage(72); }
+        [Benchmark] public Image XBR4xNoBlend() { return ScaleImage(73); }
+        [Benchmark] public Image XBR2x() { return ScaleImage(74); }
+        [Benchmark] public Image XBR3x() { return ScaleImage(75); }
+        [Benchmark] public Image XBR3xmodified() { return ScaleImage(76); }
+        [Benchmark] public Image XBR4x() { return ScaleImage(77); }
+        //[Benchmark] public Image XBR5xlegacy() { return ScaleImage(78); }
+        [Benchmark] public Image XBRz2x() { return ScaleImage(79); }
+        [Benchmark] public Image XBRz3x() { return ScaleImage(80); }
+        [Benchmark] public Image XBRz4x() { return ScaleImage(81); }
+        [Benchmark] public Image XBRz5x() { return ScaleImage(82); }
+        [Benchmark] public Image HQ2x() { return ScaleImage(83); }
+        [Benchmark] public Image HQ2xBold() { return ScaleImage(84); }
+        [Benchmark] public Image HQ2xSmart() { return ScaleImage(85); }
+        [Benchmark] public Image HQ2x3() { return ScaleImage(86); }
+        [Benchmark] public Image HQ2x3Bold() { return ScaleImage(87); }
+        [Benchmark] public Image HQ2x3Smart() { return ScaleImage(88); }
+        [Benchmark] public Image HQ2x4() { return ScaleImage(89); }
+        [Benchmark] public Image HQ2x4Bold() { return ScaleImage(90); }
+        [Benchmark] public Image HQ2x4Smart() { return ScaleImage(91); }
+        [Benchmark] public Image HQ3x() { return ScaleImage(92); }
+        [Benchmark] public Image HQ3xBold() { return ScaleImage(93); }
+        [Benchmark] public Image HQ3xSmart() { return ScaleImage(94); }
+        [Benchmark] public Image HQ4x() { return ScaleImage(95); }
+        [Benchmark] public Image HQ4xBold() { return ScaleImage(96); }
+        [Benchmark] public Image HQ4xSmart() { return ScaleImage(97); }
+        [Benchmark] public Image LQ2x() { return ScaleImage(98); }
+        [Benchmark] public Image LQ2xBold() { return ScaleImage(99); }
+        [Benchmark] public Image LQ2xSmart() { return ScaleImage(100); }
+        [Benchmark] public Image LQ2x3() { return ScaleImage(101); }
+        [Benchmark] public Image LQ2x3Bold() { return ScaleImage(102); }
+        [Benchmark] public Image LQ2x3Smart() { return ScaleImage(103); }
+        [Benchmark] public Image LQ2x4() { return ScaleImage(104); }
+        [Benchmark] public Image LQ2x4Bold() { return ScaleImage(105); }
+        [Benchmark] public Image LQ2x4Smart() { return ScaleImage(106); }
+        [Benchmark] public Image LQ3x() { return ScaleImage(107); }
+        [Benchmark] public Image LQ3xBold() { return ScaleImage(108); }
+        [Benchmark] public Image LQ3xSmart() { return ScaleImage(109); }
+        [Benchmark] public Image LQ4x() { return ScaleImage(110); }
+        [Benchmark] public Image LQ4xBold() { return ScaleImage(111); }
+        [Benchmark] public Image LQ4xSmart() { return ScaleImage(112); }
+        //[Benchmark] public Image Red() { return ScaleImage(113); }
+        //[Benchmark] public Image Green() { return ScaleImage(114); }
+        //[Benchmark] public Image Blue() { return ScaleImage(115); }
+        //[Benchmark] public Image Alpha() { return ScaleImage(116); }
+        //[Benchmark] public Image Luminance() { return ScaleImage(117); }
+        //[Benchmark] public Image ChrominanceU() { return ScaleImage(118); }
+        //[Benchmark] public Image ChrominanceV() { return ScaleImage(119); }
+        //[Benchmark] public Image u() { return ScaleImage(120); }
+        //[Benchmark] public Image v() { return ScaleImage(121); }
+        //[Benchmark] public Image Hue() { return ScaleImage(122); }
+        //[Benchmark] public Image HueColored() { return ScaleImage(123); }
+        //[Benchmark] public Image Brightness() { return ScaleImage(124); }
+        //[Benchmark] public Image Min() { return ScaleImage(125); }
+        //[Benchmark] public Image Max() { return ScaleImage(126); }
+        //[Benchmark] public Image ExtractColors() { return ScaleImage(127); }
+        //[Benchmark] public Image ExtractDeltas() { return ScaleImage(128); }
 
 
         #endregion
