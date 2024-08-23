@@ -9,12 +9,19 @@
     <ApplicationIcon>Assets\Icon-256-ICO.ico</ApplicationIcon>
     <Version>0.1.5-alpha</Version>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <Title>Image Filters</Title>
+    <PackageId>ImageFilters</PackageId>
+    <Authors>Ayoub SAHI</Authors>
+    <Product>ImageFilters</Product>
+    <PackageProjectUrl>https://github.com/Aybex/ImageFilters</PackageProjectUrl>
+    <PackageIcon>Icon-512.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Aybex/ImageFilters</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\Icon-256-ICO.ico" />
     <None Remove="Assets\Icon-256.png" />
-    <None Remove="Assets\Icon-512.png" />
     <None Remove="Assets\placeholder.png" />
   </ItemGroup>
 
@@ -47,6 +54,12 @@
     <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
     <Using Include="CommunityToolkit.Mvvm.Input" />
 
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\Icon-512.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
