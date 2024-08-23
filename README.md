@@ -1,12 +1,11 @@
 # ImageFilters
 
-This project is a collection of multiple image filters packed together (mostly upscalers), written in C# .NET 7.
+This project is a collection of multiple image filters packed together (mostly upscalers), written in C# .NET 8.
 The goal is more like getting each possible available rescaling algorithm into the library.
 
 This project is based on the work of [Hawkynt](https://github.com/Hawkynt), initial project available [here](https://github.com/Hawkynt/2dimagefilter).
 
-The project was optimized, modernized, ported to .NET 7 and split into 3 different C# Projects : Library of all filters and upscalers, UI and CLI.
-A new GUI was made in WPF in modern fluent windows 11 style using WPF-UI Library
+The project was optimized, modernized, ported to .NET 8 and split into a core Library of all filters and upscalers and a new GUI was made in WPF in modern fluent windows 11 style using WPF-UI Library
 
 ## Benchmark
 Running all **129 Filters** on a 128x128 image, on a 4x Upscale when it's available gives **-60%**  of time reduction and **-82%** of memory gain.
@@ -16,11 +15,18 @@ Running all **129 Filters** on a 128x128 image, on a 4x Upscale when it's availa
 |This project with .NET 7|646 ms|9 ms|15 ms|646 ms|621 MB| 
 
 ## New GUI
-<img src="https://user-images.githubusercontent.com/8873170/213897795-b5775446-89fc-474f-b793-1b1e99650f12.png" width="512">
+<img src="https://github.com/user-attachments/assets/005db005-299b-475e-a0a5-886cb1b5dab0" width="512">
+
+
 
 ## Prerequisites
+**.NET 8 Desktop Runtime :**
+ - [Runtime Donwload link ](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-8.0.8-windows-x64-installer)
+ - Or install with Winget :
+```powershell
+>winget install Microsoft.DotNet.DesktopRuntime.8
+```
 
- - [.NET 7 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.1-windows-x64-installer)
 
 ## List of Filters
  - NearestNeighbor <GDI+>
